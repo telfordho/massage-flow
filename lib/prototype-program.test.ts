@@ -36,6 +36,33 @@ describe("generateMassageProgram", () => {
     });
   });
 
+  it("creates a shoulder-and-neck helper program that keeps every main step inside the approved surface boundary", () => {
+    const program = generateMassageProgram(10, [{ region: "SHOULDER_NECK", side: "BOTH" }], "HELP_OTHER");
+    const mainSegments = program.segments.filter((segment) => segment.phase === "MAIN");
+
+    expect(mainSegments.map((segment) => segment.muscleName)).toEqual([
+      "後頸與膊頭表面放鬆",
+      "肩上緣輕推",
+      "肩上緣停留放鬆",
+    ]);
+    expect(mainSegments.every((segment) => segment.region === "SHOULDER_NECK")).toBe(true);
+    expect(mainSegments.every((segment) => segment.instruction.includes("避開頸前、喉嚨、頸兩側同脊柱正中"))).toBe(true);
+    expect(program.segments.reduce((sum, segment) => sum + segment.durationSec, 0)).toBe(600);
+  });
+
+  it("uses an approved shoulder-and-neck substitute when self massage would otherwise be harder to control", () => {
+    const program = generateMassageProgram(5, [{ region: "SHOULDER_NECK", side: "LEFT" }], "SELF");
+    const mainSegments = program.segments.filter((segment) => segment.phase === "MAIN");
+
+    expect(mainSegments).toHaveLength(2);
+    expect(mainSegments.find((segment) => segment.reachability === "SUBSTITUTE_ONLY")).toMatchObject({
+      muscleName: "肩上緣替代放鬆",
+      adaptationLabel: "自己按替代動作",
+    });
+    expect(mainSegments.every((segment) => segment.side === "LEFT")).toBe(true);
+    expect(mainSegments.every((segment) => segment.instruction.includes("避開頸前、喉嚨、頸兩側同脊柱正中"))).toBe(true);
+  });
+
   it("creates distinct middle and lower back steps, with self-mode substitutions", () => {
     const selfProgram = generateMassageProgram(10, [
       { region: "MID_BACK", side: "BOTH" },

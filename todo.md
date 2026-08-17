@@ -16,3 +16,8 @@
 - [x] Make the demonstration and countdown screens vertically scrollable with safe-area spacing below bottom controls.
 - [ ] Validate AsyncStorage persistence, history, and preview-gated repeat flow on a physical device after restarting the app.
 - [x] Make the session-history entry more prominent on the home and completion flows.
+- [x] Confirm the first additional broad body region for the next Massage Flow expansion: shoulder and neck.
+- [x] Define shoulder-and-neck general-relaxation safety boundaries and self-versus-assisted accessibility rules.
+- [x] Add shoulder-and-neck program generation, selection, preview, guidance, history, and repeat-flow support.
+- [x] Add regression tests for shoulder-and-neck safety and deterministic program rules.
+- [x] Update documentation and handoff materials for the shoulder-and-neck expansion.

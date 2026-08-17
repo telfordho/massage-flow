@@ -53,7 +53,7 @@ const sideOptions: { value: BodySide; label: string; helper: string }[] = [
   { value: "BOTH", label: "雙側", helper: "左右平均安排" },
   { value: "RIGHT", label: "右側", helper: "集中處理右邊位置" },
 ];
-const regionOptions: BodyRegion[] = ["UPPER_BACK", "MID_BACK", "LOWER_BACK"];
+const regionOptions: BodyRegion[] = ["SHOULDER_NECK", "UPPER_BACK", "MID_BACK", "LOWER_BACK"];
 const sensationOptions: { value: Sensation; label: string }[] = [
   { value: "TIGHT", label: "繃緊" },
   { value: "SORE", label: "酸攰" },
@@ -89,13 +89,14 @@ function formatHistoryDate(value: string) {
 function BackMap({ side, regions = ["UPPER_BACK"], emphasis = false }: { side: BodySide; regions?: BodyRegion[]; emphasis?: boolean }) {
   const showLeft = side === "LEFT" || side === "BOTH";
   const showRight = side === "RIGHT" || side === "BOTH";
+  const shoulderNeck = regions.includes("SHOULDER_NECK");
   const upper = regions.includes("UPPER_BACK");
   const middle = regions.includes("MID_BACK");
   const lower = regions.includes("LOWER_BACK");
   const activeColor = emphasis ? "#D77A61" : "#1F4D4A";
 
   return (
-    <View style={styles.bodyMapWrap} accessible accessibilityLabel="肩背位置示意圖">
+    <View style={styles.bodyMapWrap} accessible accessibilityLabel="肩頸及背部位置示意圖">
       <Svg width={206} height={250} viewBox="0 0 206 250">
         <Path
           d="M82 20 C66 22 62 42 64 60 L45 76 C35 84 38 106 50 110 L63 108 L69 201 C70 220 83 232 103 232 C123 232 136 220 137 201 L143 108 L156 110 C168 106 171 84 161 76 L142 60 C144 42 140 22 124 20 C116 13 90 13 82 20 Z"
@@ -105,6 +106,16 @@ function BackMap({ side, regions = ["UPPER_BACK"], emphasis = false }: { side: B
         />
         <Circle cx={103} cy={30} r={18} fill="#EEEDE7" stroke="#AAB8B1" strokeWidth={2} />
         <Path d="M103 56 L103 192" stroke="#C4CEC8" strokeWidth={2} strokeDasharray="4 5" />
+        <Path
+          d="M82 51 C75 54 71 61 69 69 L82 74 C85 66 90 61 97 58 Z"
+          fill={shoulderNeck && showLeft ? activeColor : "#DCE9E3"}
+          opacity={shoulderNeck && showLeft ? 0.96 : 0.55}
+        />
+        <Path
+          d="M124 51 C131 54 135 61 137 69 L124 74 C121 66 116 61 109 58 Z"
+          fill={shoulderNeck && showRight ? activeColor : "#DCE9E3"}
+          opacity={shoulderNeck && showRight ? 0.96 : 0.55}
+        />
         <Path
           d="M67 72 C78 64 93 68 100 82 L94 108 C82 101 71 96 61 91 Z"
           fill={upper && showLeft ? activeColor : "#DCE9E3"}

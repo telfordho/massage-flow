@@ -8,7 +8,7 @@
 | Latest specification package | `Massage_Flow_Spec_Package_v1.5.zip` |
 | Latest handoff package | `Massage_Flow_Handoff_Package_v1.3.zip` |
 | Product language | Cantonese Traditional Chinese for all user-facing content |
-| Current milestone | Source restoration, baseline verification, local persistence, history, and safe replay are complete |
+| Current milestone | Source restoration, local persistence/history, safe replay, and shoulder-and-neck expansion are complete |
 
 > This project is a general relaxation-guidance prototype. It does not diagnose, treat, rehabilitate, or provide medical advice.
 
@@ -32,9 +32,15 @@ The Home screen now exposes **「歷史」**. A user can review locally saved su
 
 The Preview editor now uses a fixed-order time-transfer rule for main segments. Pressing plus or minus changes the tapped segment directly and compensates with the next eligible displayed main segment; later segments are used only when the immediate next segment reaches its 30–180 second limit. The total session duration, warm-up, cool-down, and approved-action boundaries remain protected.
 
+## Shoulder-and-neck expansion
+
+**肩頸外側** is now available alongside upper, middle, and lower back. The app visualizes the selected shoulder-and-neck surface, carries the selection through preview, guidance, local history, and replay, and applies the existing deterministic duration rules.
+
+The shoulder-and-neck flow is strictly limited to the surface of the back of the neck and the outer shoulder. It excludes the front of the neck, throat, sides of the neck, and the centre of the spine. Self-guided mode replaces the harder-to-control portion with an approved outer-shoulder substitute. See `SHOULDER_NECK_EXPANSION_v1.8.md` for the full boundary.
+
 ## Verification result
 
-`pnpm check`, `pnpm test`, and `pnpm lint` pass. The active test suite contains 17 passing tests: 12 deterministic program-rule tests, including two duration-adjustment regression tests, and 5 persistence/history tests. One existing Node module-type performance warning appears during linting but does not produce a lint error. The custom launcher icon is intentionally deferred pending user review; the current review build uses lightweight default image assets.
+`pnpm check`, `pnpm test`, and `pnpm lint` pass. The active test suite contains 19 passing tests: 14 deterministic program-rule tests, including shoulder-and-neck boundary coverage and duration-adjustment regressions, and 5 persistence/history tests. One existing Node module-type performance warning appears during linting but does not produce a lint error. The custom launcher icon is intentionally deferred pending user review; the current review build uses lightweight default image assets.
 
 ## Next recommended slice
 

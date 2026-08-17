@@ -2,7 +2,7 @@ export type BodySide = "LEFT" | "RIGHT" | "BOTH";
 
 export type MassageMode = "SELF" | "HELP_OTHER";
 
-export type BodyRegion = "UPPER_BACK" | "MID_BACK" | "LOWER_BACK";
+export type BodyRegion = "SHOULDER_NECK" | "UPPER_BACK" | "MID_BACK" | "LOWER_BACK";
 
 export type Sensation = "TIGHT" | "SORE" | "STIFF" | "TENDER" | "RELAX";
 
@@ -89,6 +89,12 @@ export type SkipPlaybackResult = {
 };
 
 export const REGION_DETAILS: Record<BodyRegion, { label: string; shortLabel: string; selfHint: string; helperHint: string }> = {
+  SHOULDER_NECK: {
+    label: "肩頸外側",
+    shortLabel: "肩頸",
+    selfHint: "只安排後頸同膊頭外側嘅表面位置；會避開頸前、喉嚨、頸兩側同脊柱正中。",
+    helperHint: "只安排後頸同膊頭外側嘅輕柔表面流程；唔會處理頸前、喉嚨、頸兩側或脊柱正中。",
+  },
   UPPER_BACK: {
     label: "膊頭／上背",
     shortLabel: "上背",
@@ -168,6 +174,21 @@ function step(
 function mainStepsFor(target: RegionTarget, mode: MassageMode) {
   const side = sideLabel[target.side];
   const prefix = target.side === "BOTH" ? "左右輪流" : `集中處理${side}`;
+
+  if (target.region === "SHOULDER_NECK") {
+    const safetyBoundary = "全程只停留喺後頸同膊頭外側嘅表面，避開頸前、喉嚨、頸兩側同脊柱正中。";
+    if (mode === "SELF") {
+      return [
+        step("self-neck-shoulder-surface", "MAIN", target, "後頸與膊頭表面放鬆", "後頸至膊頭外側嘅表面位置", "掌心輕貼停留", `${prefix}，用掌心輕貼後頸至膊頭外側嘅表面，短暫停留後慢慢放開。${safetyBoundary}`),
+        step("self-shoulder-edge-substitute", "MAIN", target, "肩上緣替代放鬆", "膊頭外側至肩上緣較易掂到嘅位置", "交叉手掌輕推", "後頸較難自己控制力度；改用另一隻手喺膊頭外側至肩上緣作短而慢嘅輕推。" + safetyBoundary, "SUBSTITUTE_ONLY", "自己按替代動作"),
+      ];
+    }
+    return [
+      step("neck-shoulder-surface", "MAIN", target, "後頸與膊頭表面放鬆", "後頸至膊頭外側嘅表面位置", "掌心慢推", `${prefix}，用掌心喺後頸至膊頭外側嘅表面作短而慢嘅輕推。${safetyBoundary}`),
+      step("shoulder-edge-glide", "MAIN", target, "肩上緣輕推", "膊頭外側至肩上緣", "掌心長推撫", `${prefix}，由膊頭外側向肩上緣慢慢推撫，再慢慢放開。${safetyBoundary}`),
+      step("upper-shoulder-release", "MAIN", target, "肩上緣停留放鬆", "膊頭近頸嘅外側位置", "掌心停留", `${prefix}，用掌心喺膊頭近頸嘅外側位置輕貼停留，保持舒適力度。${safetyBoundary}`),
+    ];
+  }
 
   if (target.region === "UPPER_BACK") {
     if (mode === "SELF") {
@@ -325,8 +346,8 @@ export function generateMassageProgram(
     durationMinutes,
     totalDurationSec,
     modeNotice: mode === "SELF"
-      ? "自己按只安排你一般可以自己掂到嘅位置；較難掂到嘅中背或中央上背會有清楚替代動作。"
-      : "幫人按會按你揀嘅優先次序，使用完整嘅已審核肩背動作流程。",
+      ? "自己按只安排你一般可以自己掂到嘅位置；較難掂到嘅後頸、中背或中央上背會有清楚替代動作。"
+      : "幫人按會按你揀嘅優先次序，使用完整嘅已審核肩頸及背部流程。",
     contextNotice: (() => {
       const labels = contextLabels(context);
       const conservative = context.severity >= 4 ? "程度較高，會保留更多暖身同收尾時間，並以較保守節奏安排。" : "程度屬於一般範圍，會按你揀嘅部位優先次序安排主要時間。";
