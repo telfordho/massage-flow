@@ -1,6 +1,6 @@
 # Massage Flow — New Chat Handoff
 
-Use the active **Massage Flow** project as the code baseline. Before editing, read `HANDOFF_MANIFEST.md`, `CURRENT_STATE.md`, this file, `todo.md`, and the relevant documents from `Massage_Flow_Spec_Package_v1.8.zip`, including `SPEC_ADDENDUM_v1.6.md`, `DURATION_EDIT_FIX_v1.7.md`, and `SHOULDER_NECK_EXPANSION_v1.8.md`. If the active project is unavailable, attach `Massage_Flow_Prototype_Source_v1.3.zip`, inspect it without executing code, and ask for confirmation before restoring it into a separate Expo project.
+Use the active **Massage Flow** project as the code baseline. Before editing, read `HANDOFF_MANIFEST.md`, `CURRENT_STATE.md`, this file, `todo.md`, and the relevant documents from `Massage_Flow_Spec_Package_v1.9.zip`, including `SPEC_ADDENDUM_v1.6.md`, `DURATION_EDIT_FIX_v1.7.md`, `SHOULDER_NECK_EXPANSION_v1.8.md`, and `FOREARM_PALM_EXPANSION_v1.9.md`. If the active project is unavailable, attach `Massage_Flow_Prototype_Source_v1.4.zip`, inspect it without executing code, and ask for confirmation before restoring it into a separate Expo project.
 
 ## Non-negotiable product rules
 
@@ -12,6 +12,7 @@ Use the active **Massage Flow** project as the code baseline. Before editing, re
 6. Preview, demonstration, and countdown share one generated program.
 7. The product provides general relaxation guidance only; it does not diagnose, treat, or rehabilitate.
 8. Shoulder-and-neck flow stays on the back-of-neck and outer-shoulder surface; it avoids the front of the neck, throat, sides of the neck, and the centre of the spine.
+9. Forearm-and-palm flow stays on the forearm and palm surface; it avoids the wrist, finger joints, and prominent bony areas.
 
 ## Development sequence
 
@@ -23,4 +24,4 @@ Use the active **Massage Flow** project as the code baseline. Before editing, re
 
 ## Current recommended slice
 
-Validate the existing AsyncStorage persistence, history, replay, and shoulder-and-neck selection flows on physical iOS and Android devices. Keep replay inside the existing program preview boundary, and do not introduce cloud sync or accounts unless explicitly requested.
+Validate the existing AsyncStorage persistence, history, replay, shoulder-and-neck, and forearm-and-palm selection flows on physical iOS and Android devices. Keep replay inside the existing program preview boundary, and do not introduce cloud sync or accounts unless explicitly requested.

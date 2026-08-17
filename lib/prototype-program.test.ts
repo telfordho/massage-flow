@@ -63,6 +63,30 @@ describe("generateMassageProgram", () => {
     expect(mainSegments.every((segment) => segment.instruction.includes("避開頸前、喉嚨、頸兩側同脊柱正中"))).toBe(true);
   });
 
+  it("creates a forearm-and-palm helper program that stays on the approved soft-surface boundary", () => {
+    const program = generateMassageProgram(10, [{ region: "FOREARM_PALM", side: "BOTH" }], "HELP_OTHER");
+    const mainSegments = program.segments.filter((segment) => segment.phase === "MAIN");
+
+    expect(mainSegments.map((segment) => segment.muscleName)).toEqual([
+      "前臂表面慢推",
+      "手掌表面推撫",
+      "前臂與手掌輕貼放鬆",
+    ]);
+    expect(mainSegments.every((segment) => segment.region === "FOREARM_PALM")).toBe(true);
+    expect(mainSegments.every((segment) => segment.instruction.includes("避開手腕、手指關節同突出的骨位"))).toBe(true);
+    expect(program.segments.reduce((sum, segment) => sum + segment.durationSec, 0)).toBe(600);
+  });
+
+  it("keeps forearm-and-palm self massage directly reachable on the selected side", () => {
+    const program = generateMassageProgram(5, [{ region: "FOREARM_PALM", side: "RIGHT" }], "SELF");
+    const mainSegments = program.segments.filter((segment) => segment.phase === "MAIN");
+
+    expect(mainSegments).toHaveLength(2);
+    expect(mainSegments.every((segment) => segment.reachability === "DIRECT")).toBe(true);
+    expect(mainSegments.every((segment) => segment.side === "RIGHT")).toBe(true);
+    expect(mainSegments.every((segment) => segment.instruction.includes("避開手腕、手指關節同突出的骨位"))).toBe(true);
+  });
+
   it("creates distinct middle and lower back steps, with self-mode substitutions", () => {
     const selfProgram = generateMassageProgram(10, [
       { region: "MID_BACK", side: "BOTH" },

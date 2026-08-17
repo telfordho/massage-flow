@@ -2,7 +2,7 @@ export type BodySide = "LEFT" | "RIGHT" | "BOTH";
 
 export type MassageMode = "SELF" | "HELP_OTHER";
 
-export type BodyRegion = "SHOULDER_NECK" | "UPPER_BACK" | "MID_BACK" | "LOWER_BACK";
+export type BodyRegion = "SHOULDER_NECK" | "FOREARM_PALM" | "UPPER_BACK" | "MID_BACK" | "LOWER_BACK";
 
 export type Sensation = "TIGHT" | "SORE" | "STIFF" | "TENDER" | "RELAX";
 
@@ -95,6 +95,12 @@ export const REGION_DETAILS: Record<BodyRegion, { label: string; shortLabel: str
     selfHint: "只安排後頸同膊頭外側嘅表面位置；會避開頸前、喉嚨、頸兩側同脊柱正中。",
     helperHint: "只安排後頸同膊頭外側嘅輕柔表面流程；唔會處理頸前、喉嚨、頸兩側或脊柱正中。",
   },
+  FOREARM_PALM: {
+    label: "前臂與手掌",
+    shortLabel: "前臂手掌",
+    selfHint: "只安排前臂同手掌表面；會避開手腕、手指關節同突出的骨位。",
+    helperHint: "可以安排前臂同手掌表面嘅輕柔流程；唔會直接按手腕、手指關節或突出的骨位。",
+  },
   UPPER_BACK: {
     label: "膊頭／上背",
     shortLabel: "上背",
@@ -174,6 +180,21 @@ function step(
 function mainStepsFor(target: RegionTarget, mode: MassageMode) {
   const side = sideLabel[target.side];
   const prefix = target.side === "BOTH" ? "左右輪流" : `集中處理${side}`;
+
+  if (target.region === "FOREARM_PALM") {
+    const safetyBoundary = "全程只處理前臂同手掌表面，避開手腕、手指關節同突出的骨位。";
+    if (mode === "SELF") {
+      return [
+        step("self-forearm-surface", "MAIN", target, "前臂表面放鬆", "前臂內外側較平坦嘅表面", "另一隻手掌慢推", `${prefix}，用另一隻手掌喺前臂較平坦嘅表面作短而慢嘅輕推。${safetyBoundary}`),
+        step("self-palm-surface", "MAIN", target, "手掌表面放鬆", "手掌中央至拇指根部附近嘅柔軟位置", "拇指腹輕貼停留", `${prefix}，用另一隻手嘅拇指腹喺手掌柔軟位置輕貼停留，再慢慢放開。${safetyBoundary}`),
+      ];
+    }
+    return [
+      step("forearm-surface-glide", "MAIN", target, "前臂表面慢推", "前臂內外側較平坦嘅表面", "掌心慢推", `${prefix}，以掌心沿前臂較平坦嘅表面作短而慢嘅輕推。${safetyBoundary}`),
+      step("palm-surface-glide", "MAIN", target, "手掌表面推撫", "手掌中央至拇指根部附近嘅柔軟位置", "掌心輕推撫", `${prefix}，喺手掌柔軟位置以較輕力度短暫推撫。${safetyBoundary}`),
+      step("forearm-palm-release", "MAIN", target, "前臂與手掌輕貼放鬆", "前臂表面及手掌柔軟位置", "掌心停留", `${prefix}，喺前臂表面同手掌柔軟位置短暫輕貼停留，保持舒適力度。${safetyBoundary}`),
+    ];
+  }
 
   if (target.region === "SHOULDER_NECK") {
     const safetyBoundary = "全程只停留喺後頸同膊頭外側嘅表面，避開頸前、喉嚨、頸兩側同脊柱正中。";
@@ -347,7 +368,7 @@ export function generateMassageProgram(
     totalDurationSec,
     modeNotice: mode === "SELF"
       ? "自己按只安排你一般可以自己掂到嘅位置；較難掂到嘅後頸、中背或中央上背會有清楚替代動作。"
-      : "幫人按會按你揀嘅優先次序，使用完整嘅已審核肩頸及背部流程。",
+      : "幫人按會按你揀嘅優先次序，使用完整嘅已審核肩頸、前臂手掌及背部流程。",
     contextNotice: (() => {
       const labels = contextLabels(context);
       const conservative = context.severity >= 4 ? "程度較高，會保留更多暖身同收尾時間，並以較保守節奏安排。" : "程度屬於一般範圍，會按你揀嘅部位優先次序安排主要時間。";

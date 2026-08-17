@@ -21,3 +21,8 @@
 - [x] Add shoulder-and-neck program generation, selection, preview, guidance, history, and repeat-flow support.
 - [x] Add regression tests for shoulder-and-neck safety and deterministic program rules.
 - [x] Update documentation and handoff materials for the shoulder-and-neck expansion.
+- [x] Confirm the next broad body region to expand after shoulder-and-neck validation: forearm and palm.
+- [x] Define forearm-and-palm general-relaxation safety boundaries and self-versus-assisted accessibility rules.
+- [x] Add forearm-and-palm program generation, selection, preview, guidance, history, and repeat-flow support.
+- [x] Add regression tests for forearm-and-palm safety and deterministic program rules.
+- [x] Update documentation and handoff materials for the forearm-and-palm expansion.

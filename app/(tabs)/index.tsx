@@ -53,7 +53,8 @@ const sideOptions: { value: BodySide; label: string; helper: string }[] = [
   { value: "BOTH", label: "雙側", helper: "左右平均安排" },
   { value: "RIGHT", label: "右側", helper: "集中處理右邊位置" },
 ];
-const regionOptions: BodyRegion[] = ["SHOULDER_NECK", "UPPER_BACK", "MID_BACK", "LOWER_BACK"];
+const backRegionOptions: BodyRegion[] = ["SHOULDER_NECK", "UPPER_BACK", "MID_BACK", "LOWER_BACK"];
+const regionOptions: BodyRegion[] = ["SHOULDER_NECK", "FOREARM_PALM", "UPPER_BACK", "MID_BACK", "LOWER_BACK"];
 const sensationOptions: { value: Sensation; label: string }[] = [
   { value: "TIGHT", label: "繃緊" },
   { value: "SORE", label: "酸攰" },
@@ -86,7 +87,37 @@ function formatHistoryDate(value: string) {
   return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日 ${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}`;
 }
 
+function ForearmPalmMap({ side, emphasis = false }: { side: BodySide; emphasis?: boolean }) {
+  const showLeft = side === "LEFT" || side === "BOTH";
+  const showRight = side === "RIGHT" || side === "BOTH";
+  const activeColor = emphasis ? "#D77A61" : "#1F4D4A";
+  const leftFill = showLeft ? activeColor : "#DCE9E3";
+  const rightFill = showRight ? activeColor : "#DCE9E3";
+  const leftOpacity = showLeft ? 0.96 : 0.55;
+  const rightOpacity = showRight ? 0.96 : 0.55;
+
+  return (
+    <View style={styles.bodyMapWrap} accessible accessibilityLabel="前臂與手掌位置示意圖">
+      <Svg width={206} height={250} viewBox="0 0 206 250">
+        <Path d="M55 30 C43 44 42 67 49 84 L67 143 L84 138 L73 74 C70 56 68 40 55 30 Z" fill="#EEEDE7" stroke="#AAB8B1" strokeWidth={2} />
+        <Path d="M151 30 C163 44 164 67 157 84 L139 143 L122 138 L133 74 C136 56 138 40 151 30 Z" fill="#EEEDE7" stroke="#AAB8B1" strokeWidth={2} />
+        <Path d="M67 143 C59 157 61 180 72 195 L81 216 C86 226 99 226 101 215 L98 179 L84 138 Z" fill="#EEEDE7" stroke="#AAB8B1" strokeWidth={2} />
+        <Path d="M139 143 C147 157 145 180 134 195 L125 216 C120 226 107 226 105 215 L108 179 L122 138 Z" fill="#EEEDE7" stroke="#AAB8B1" strokeWidth={2} />
+        <Path d="M53 41 C48 55 50 71 55 84 L71 137 L82 133 L71 72 C69 57 65 45 53 41 Z" fill={leftFill} opacity={leftOpacity} />
+        <Path d="M153 41 C158 55 156 71 151 84 L135 137 L124 133 L135 72 C137 57 141 45 153 41 Z" fill={rightFill} opacity={rightOpacity} />
+        <Path d="M71 147 C66 161 69 178 77 190 L84 208 C87 214 93 214 94 208 L91 179 L82 141 Z" fill={leftFill} opacity={leftOpacity} />
+        <Path d="M135 147 C140 161 137 178 129 190 L122 208 C119 214 113 214 112 208 L115 179 L124 141 Z" fill={rightFill} opacity={rightOpacity} />
+      </Svg>
+      <View style={styles.mapCaption}>
+        <View style={styles.mapDot} />
+        <Text style={styles.mapCaptionText}>前臂與手掌 · 概括選區</Text>
+      </View>
+    </View>
+  );
+}
+
 function BackMap({ side, regions = ["UPPER_BACK"], emphasis = false }: { side: BodySide; regions?: BodyRegion[]; emphasis?: boolean }) {
+  if (regions.includes("FOREARM_PALM")) return <ForearmPalmMap side={side} emphasis={emphasis} />;
   const showLeft = side === "LEFT" || side === "BOTH";
   const showRight = side === "RIGHT" || side === "BOTH";
   const shoulderNeck = regions.includes("SHOULDER_NECK");
@@ -581,7 +612,7 @@ export default function HomeScreen() {
         <Text style={styles.cardKicker}>本機家庭成員 · {selectedMember.label}</Text>
         <Text style={styles.cardTitle}>由部位開始安排</Text>
         <Text style={styles.cardText}>{massageMode === "SELF" ? "可揀上背、中背或下背；較難自行接觸嘅位置會清楚標示替代流程。" : "可按優先次序揀上背、中背及下背，系統會安排完整嘅按摩者動作流程。"}</Text>
-        <BackMap side="BOTH" regions={regionOptions} />
+        <BackMap side="BOTH" regions={backRegionOptions} />
       </View>
       <Pressable onPress={() => setScreen("HISTORY")} style={({ pressed }) => [styles.historyEntryCard, pressed && styles.optionCardPressed]}>
         <View style={styles.historyEntryIcon}><Text style={styles.historyEntryIconText}>↺</Text></View>
