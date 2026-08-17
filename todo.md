@@ -29,9 +29,3 @@
 - [x] Add an explicit back action from the program preview to the preceding setup screen.
 - [x] Add confirmed single-entry deletion for local session history and persist the result.
 - [x] Add regression tests for history deletion and preview-back behaviour.
-- [x] Consolidate versioned documentation and ZIP archives into one current handoff baseline and archive superseded materials.
-- [x] Rewrite the new-chat handoff guide with the consolidated recovery workflow.
-- [x] Prepare downloadable complete-baseline and current-source archives for the user.
-- [x] Provide a complete copy-ready new-chat handoff procedure for the consolidated baseline.
-- [x] Investigate and correct the project ChatBot’s stale progress source.
-- [x] Restore detailed archived specifications, decision records, and handoff references to project shared files for new Chat context.
