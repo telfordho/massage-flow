@@ -34,3 +34,4 @@
 - [x] Prepare downloadable complete-baseline and current-source archives for the user.
 - [x] Provide a complete copy-ready new-chat handoff procedure for the consolidated baseline.
 - [x] Investigate and correct the project ChatBot’s stale progress source.
+- [x] Restore detailed archived specifications, decision records, and handoff references to project shared files for new Chat context.
