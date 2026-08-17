@@ -215,28 +215,47 @@ function contextLabels(context: SessionContext) {
   return { sensation: sensation[context.sensation], duration: duration[context.durationBand], goal: goal[context.goal] };
 }
 
-function applyMainDurationOverrides(segments: DraftProgramSegment[], mainBudget: number, overrides: Record<string, number> = {}) {
-  const minimum = 30;
-  const explicit = segments.filter((segment) => Number.isFinite(overrides[segment.id]));
-  const remaining = segments.filter((segment) => !Number.isFinite(overrides[segment.id]));
-  const explicitTotal = explicit.reduce((sum, segment) => sum + Math.min(180, Math.max(minimum, Math.round(overrides[segment.id]))), 0);
-  const remainingBudget = mainBudget - explicitTotal;
+const MIN_MAIN_SEGMENT_DURATION_SEC = 30;
+const MAX_MAIN_SEGMENT_DURATION_SEC = 180;
 
-  if (remainingBudget < remaining.length * minimum) return segments;
+function transferMainDuration(
+  segments: DraftProgramSegment[],
+  targetId: string,
+  requestedDurationSec: number,
+): DraftProgramSegment[] {
+  const targetIndex = segments.findIndex((segment) => segment.id === targetId);
+  if (targetIndex < 0 || !Number.isFinite(requestedDurationSec)) return segments;
 
-  const weights = remaining.map((segment) => segment.durationSec);
-  const weightTotal = weights.reduce((sum, value) => sum + value, 0) || 1;
-  const distributed = remaining.map((segment, index) => ({
-    id: segment.id,
-    durationSec: Math.floor((remainingBudget * weights[index]) / weightTotal),
-  }));
-  if (distributed.length > 0) distributed[distributed.length - 1].durationSec += remainingBudget - distributed.reduce((sum, segment) => sum + segment.durationSec, 0);
+  const currentDuration = segments[targetIndex].durationSec;
+  const requestedDuration = Math.min(MAX_MAIN_SEGMENT_DURATION_SEC, Math.max(MIN_MAIN_SEGMENT_DURATION_SEC, Math.round(requestedDurationSec)));
+  const requestedDelta = requestedDuration - currentDuration;
+  if (requestedDelta === 0) return segments;
 
-  return segments.map((segment) => {
-    if (Number.isFinite(overrides[segment.id])) return { ...segment, durationSec: Math.min(180, Math.max(minimum, Math.round(overrides[segment.id]))) };
-    const replacement = distributed.find((candidate) => candidate.id === segment.id);
-    return replacement ? { ...segment, durationSec: replacement.durationSec } : segment;
-  });
+  const next = segments.map((segment) => ({ ...segment }));
+  const compensators = Array.from({ length: segments.length - 1 }, (_, offset) => (targetIndex + offset + 1) % segments.length);
+  let remainingDelta = Math.abs(requestedDelta);
+
+  for (const index of compensators) {
+    const capacity = requestedDelta > 0
+      ? next[index].durationSec - MIN_MAIN_SEGMENT_DURATION_SEC
+      : MAX_MAIN_SEGMENT_DURATION_SEC - next[index].durationSec;
+    const transferred = Math.min(remainingDelta, Math.max(0, capacity));
+    if (transferred === 0) continue;
+    next[index].durationSec += requestedDelta > 0 ? -transferred : transferred;
+    remainingDelta -= transferred;
+    if (remainingDelta === 0) break;
+  }
+
+  const appliedDelta = Math.abs(requestedDelta) - remainingDelta;
+  next[targetIndex].durationSec += requestedDelta > 0 ? appliedDelta : -appliedDelta;
+  return next;
+}
+
+function applyMainDurationOverrides(segments: DraftProgramSegment[], _mainBudget: number, overrides: Record<string, number> = {}) {
+  return Object.entries(overrides).reduce(
+    (current, [segmentId, durationSec]) => transferMainDuration(current, segmentId, durationSec),
+    segments,
+  );
 }
 
 function applySubstituteVariants(segments: DraftProgramSegment[], variants: Record<string, SubstituteVariant> = {}) {

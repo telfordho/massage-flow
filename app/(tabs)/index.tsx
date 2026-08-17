@@ -783,7 +783,7 @@ export default function HomeScreen() {
         </View>}
         <View style={styles.editSection}>
           <Text style={styles.editSectionTitle}>主要段落時長</Text>
-          <Text style={styles.editSectionHint}>每次可加減 30 秒；系統會由其他主要段落重新分配，總時長維持不變。</Text>
+          <Text style={styles.editSectionHint}>每次可加減 30 秒；系統只會按畫面次序同下一個可補償嘅主要段落交收時間，總時長維持不變。</Text>
           {mainSegments.map((segment) => <View key={segment.id} style={styles.editSegmentCard}>
             <View style={styles.editSegmentCopy}><Text style={styles.editSegmentTitle}>{segment.muscleName}</Text><Text style={styles.editSegmentDetail}>{segment.technique} · {formatDuration(segment.durationSec)}</Text></View>
             <View style={styles.editDurationControls}><Pressable onPress={() => adjustMainSegmentDuration(segment, -30)} style={styles.editAdjustButton}><Text style={styles.editAdjustText}>−</Text></Pressable><Text style={styles.editDurationText}>{formatDuration(segment.durationSec)}</Text><Pressable onPress={() => adjustMainSegmentDuration(segment, 30)} style={styles.editAdjustButton}><Text style={styles.editAdjustText}>＋</Text></Pressable></View>

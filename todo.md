@@ -11,3 +11,4 @@
 - [x] Update current-state, handoff, specification, and source-archive materials after the feature is verified.
 - [x] Generate a custom Massage Flow launcher-branding concept for user review.
 - [ ] Wait for user approval before including the custom Massage Flow launcher branding in a checkpointed release.
+- [x] Reapply the fixed-order main-segment duration-edit correction after workspace recovery.

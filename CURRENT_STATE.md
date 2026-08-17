@@ -30,9 +30,11 @@ The prototype now validates and saves its local data with AsyncStorage. It retai
 
 The Home screen now exposes **「歷史」**. A user can review locally saved summaries and choose **「重做同一套流程」**; the saved input returns to the existing Preview screen and regenerates the program through the current deterministic safety rules. It does not auto-start the session or bypass the preview/edit boundary.
 
+The Preview editor now uses a fixed-order time-transfer rule for main segments. Pressing plus or minus changes the tapped segment directly and compensates with the next eligible displayed main segment; later segments are used only when the immediate next segment reaches its 30–180 second limit. The total session duration, warm-up, cool-down, and approved-action boundaries remain protected.
+
 ## Verification result
 
-`pnpm check`, `pnpm test`, and `pnpm lint` pass. The active test suite contains 15 passing tests: 10 existing deterministic program-rule tests and 5 persistence/history tests. One existing Node module-type performance warning appears during linting but does not produce a lint error. The custom launcher icon is intentionally deferred pending user review; the current review build uses lightweight default image assets.
+`pnpm check`, `pnpm test`, and `pnpm lint` pass. The active test suite contains 17 passing tests: 12 deterministic program-rule tests, including two duration-adjustment regression tests, and 5 persistence/history tests. One existing Node module-type performance warning appears during linting but does not produce a lint error. The custom launcher icon is intentionally deferred pending user review; the current review build uses lightweight default image assets.
 
 ## Next recommended slice
 

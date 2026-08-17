@@ -111,6 +111,41 @@ describe("generateMassageProgram", () => {
     expect(plan.segments.reduce((sum, segment) => sum + segment.durationSec, 0)).toBe(600);
   });
 
+  it("moves time between the edited segment and the next main segment in a fixed order", () => {
+    const base = generateMassageProgram(10, [{ region: "UPPER_BACK", side: "BOTH" }], "HELP_OTHER");
+    const baseMain = base.segments.filter((segment) => segment.phase === "MAIN");
+    const appliedIncrease = Math.min(30, 180 - baseMain[0].durationSec);
+    const edited = generateMassageProgram(10, [{ region: "UPPER_BACK", side: "BOTH" }], "HELP_OTHER", undefined, {
+      mainDurationOverrides: { "upper-trapezius": baseMain[0].durationSec + 30 },
+    });
+    const editedMain = edited.segments.filter((segment) => segment.phase === "MAIN");
+
+    expect(editedMain[0].durationSec).toBe(baseMain[0].durationSec + appliedIncrease);
+    expect(editedMain[1].durationSec).toBe(baseMain[1].durationSec - appliedIncrease);
+    expect(editedMain[2].durationSec).toBe(baseMain[2].durationSec);
+    expect(edited.segments.reduce((sum, segment) => sum + segment.durationSec, 0)).toBe(600);
+  });
+
+  it("keeps prior edits stable when another selected main segment is adjusted", () => {
+    const base = generateMassageProgram(10, [{ region: "UPPER_BACK", side: "BOTH" }], "HELP_OTHER");
+    const baseMain = base.segments.filter((segment) => segment.phase === "MAIN");
+    const appliedIncrease = Math.min(30, 180 - baseMain[0].durationSec);
+    const edited = generateMassageProgram(10, [{ region: "UPPER_BACK", side: "BOTH" }], "HELP_OTHER", undefined, {
+      mainDurationOverrides: {
+        "upper-trapezius": baseMain[0].durationSec + 30,
+        "scapular-border": baseMain[1].durationSec,
+      },
+    });
+    const editedMain = edited.segments.filter((segment) => segment.phase === "MAIN");
+
+    expect(editedMain.map((segment) => segment.durationSec)).toEqual([
+      baseMain[0].durationSec + appliedIncrease,
+      baseMain[1].durationSec,
+      baseMain[2].durationSec - appliedIncrease,
+    ]);
+    expect(edited.segments.reduce((sum, segment) => sum + segment.durationSec, 0)).toBe(600);
+  });
+
   it("moves to the next segment only when the current segment ends", () => {
     const program = generateUpperBackProgram(5, "BOTH", "HELP_OTHER");
     const initial = createPlaybackState(program);
