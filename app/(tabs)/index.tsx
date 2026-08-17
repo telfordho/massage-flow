@@ -36,6 +36,7 @@ import {
   createHistoryEntry,
   createLocalSessionId,
   initialHouseholdMembers,
+  removeHistoryEntry,
   updateHistoryOutcome,
   type HouseholdMember,
   type SessionHistoryEntry,
@@ -218,6 +219,7 @@ export default function HomeScreen() {
   const [isRunning, setIsRunning] = useState(true);
   const [outcome, setOutcome] = useState<Outcome>(null);
   const [activeHistoryId, setActiveHistoryId] = useState<string | null>(null);
+  const [pendingHistoryDeleteId, setPendingHistoryDeleteId] = useState<string | null>(null);
 
   const program = useMemo(
     () => generateMassageProgram(durationMinutes, selectedTargets, massageMode, sessionContext, editIntent),
@@ -476,6 +478,14 @@ export default function HomeScreen() {
     setOutcome(null);
     setActiveHistoryId(null);
     setScreen("PREVIEW");
+  };
+
+  const confirmDeleteHistoryEntry = () => {
+    if (!pendingHistoryDeleteId) return;
+    const entryId = pendingHistoryDeleteId;
+    setHistory((current) => removeHistoryEntry(current, entryId));
+    if (activeHistoryId === entryId) setActiveHistoryId(null);
+    setPendingHistoryDeleteId(null);
   };
 
   const recordOutcome = (nextOutcome: SessionOutcome) => {
@@ -811,7 +821,13 @@ export default function HomeScreen() {
           </View>
         ))}
       </View>
-      <View style={styles.previewActions}><GhostButton label="調整程序" onPress={() => setScreen("EDIT")} /><PrimaryButton label="開始逐段引導" onPress={startGuide} /></View>
+      <View style={styles.previewActions}>
+        <View style={styles.previewSecondaryActions}>
+          <GhostButton label="返回時長" onPress={() => setScreen("DURATION")} />
+          <GhostButton label="調整程序" onPress={() => setScreen("EDIT")} />
+        </View>
+        <PrimaryButton label="開始逐段引導" onPress={startGuide} />
+      </View>
     </ScrollView>
   );
 
@@ -943,6 +959,17 @@ export default function HomeScreen() {
             <Text style={styles.historyTitle}>{item.memberLabel} · {regionLabels}</Text>
             <Text style={styles.historyMeta}>{item.massageMode === "SELF" ? "自己按" : "幫他人按"} · 完成 {item.completedSegments}／{item.segmentCount} 段 · {outcomeLabel}</Text>
             <Pressable onPress={() => replayHistoryEntry(item)} style={({ pressed }) => [styles.historyReplayButton, pressed && styles.primaryButtonPressed]}><Text style={styles.historyReplayText}>重做同一套流程</Text><Text style={styles.historyReplayArrow}>›</Text></Pressable>
+            {pendingHistoryDeleteId === item.id ? (
+              <View style={styles.historyDeleteConfirm}>
+                <Text style={styles.historyDeleteConfirmText}>確定刪除呢次流程紀錄？此動作無法復原。</Text>
+                <View style={styles.historyDeleteActions}>
+                  <Pressable onPress={() => setPendingHistoryDeleteId(null)} style={({ pressed }) => [styles.historyDeleteCancel, pressed && styles.optionCardPressed]}><Text style={styles.historyDeleteCancelText}>取消</Text></Pressable>
+                  <Pressable onPress={confirmDeleteHistoryEntry} style={({ pressed }) => [styles.historyDeleteConfirmButton, pressed && styles.optionCardPressed]}><Text style={styles.historyDeleteConfirmButtonText}>確認刪除</Text></Pressable>
+                </View>
+              </View>
+            ) : (
+              <Pressable onPress={() => setPendingHistoryDeleteId(item.id)} style={({ pressed }) => [styles.historyDeleteButton, pressed && styles.optionCardPressed]}><Text style={styles.historyDeleteButtonText}>刪除呢次紀錄</Text></Pressable>
+            )}
           </View>
         );
       }}
@@ -1131,7 +1158,8 @@ const styles = StyleSheet.create({
   demoButtonText: { color: "#1F4D4A", fontSize: 14, fontWeight: "700" },
   demoButtonArrow: { color: "#1F4D4A", fontSize: 18 },
   editAppliedNote: { color: "#1F4D4A", fontSize: 12, lineHeight: 18, fontWeight: "700", marginTop: 3 },
-  previewActions: { flexDirection: "row", gap: 10, marginTop: 4 },
+  previewActions: { gap: 10, marginTop: 4 },
+  previewSecondaryActions: { flexDirection: "row", gap: 10 },
   editSection: { backgroundColor: "#FFFFFF", borderRadius: 20, padding: 17, gap: 11, borderWidth: 1, borderColor: "#E0E7E2" },
   editSectionTitle: { color: "#1B2523", fontSize: 17, fontWeight: "800" },
   editSectionHint: { color: "#64736D", fontSize: 13, lineHeight: 19 },
@@ -1242,5 +1270,14 @@ const styles = StyleSheet.create({
   historyReplayButton: { minHeight: 48, borderRadius: 14, backgroundColor: "#1F4D4A", paddingHorizontal: 15, flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: 4 },
   historyReplayText: { color: "#FFFFFF", fontSize: 14, fontWeight: "800" },
   historyReplayArrow: { color: "#FFFFFF", fontSize: 24, fontWeight: "400" },
+  historyDeleteButton: { minHeight: 40, borderRadius: 12, borderWidth: 1, borderColor: "#E8CFC7", alignItems: "center", justifyContent: "center", marginTop: 2 },
+  historyDeleteButtonText: { color: "#9B5947", fontSize: 13, fontWeight: "800" },
+  historyDeleteConfirm: { backgroundColor: "#F9E9E4", borderRadius: 14, padding: 13, gap: 11, marginTop: 2 },
+  historyDeleteConfirmText: { color: "#824B3D", fontSize: 13, lineHeight: 19, fontWeight: "700" },
+  historyDeleteActions: { flexDirection: "row", gap: 9 },
+  historyDeleteCancel: { flex: 1, minHeight: 40, borderRadius: 11, backgroundColor: "#FFFFFF", alignItems: "center", justifyContent: "center" },
+  historyDeleteCancelText: { color: "#6A7872", fontSize: 13, fontWeight: "800" },
+  historyDeleteConfirmButton: { flex: 1, minHeight: 40, borderRadius: 11, backgroundColor: "#A75B48", alignItems: "center", justifyContent: "center" },
+  historyDeleteConfirmButtonText: { color: "#FFFFFF", fontSize: 13, fontWeight: "800" },
   historyFooter: { marginTop: 8 },
 });

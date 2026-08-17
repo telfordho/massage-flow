@@ -180,6 +180,10 @@ export function updateHistoryOutcome(
   return history.map((entry) => entry.id === entryId ? { ...cloneHistoryEntry(entry), outcome } : cloneHistoryEntry(entry));
 }
 
+export function removeHistoryEntry(history: SessionHistoryEntry[], entryId: string): SessionHistoryEntry[] {
+  return history.filter((entry) => entry.id !== entryId).map(cloneHistoryEntry);
+}
+
 export function createHistoryEntry(input: Omit<SessionHistoryEntry, "outcome"> & { outcome?: SessionOutcome | null }): SessionHistoryEntry {
   return {
     ...input,

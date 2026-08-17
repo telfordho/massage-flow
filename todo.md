@@ -26,3 +26,6 @@
 - [x] Add forearm-and-palm program generation, selection, preview, guidance, history, and repeat-flow support.
 - [x] Add regression tests for forearm-and-palm safety and deterministic program rules.
 - [x] Update documentation and handoff materials for the forearm-and-palm expansion.
+- [x] Add an explicit back action from the program preview to the preceding setup screen.
+- [x] Add confirmed single-entry deletion for local session history and persist the result.
+- [x] Add regression tests for history deletion and preview-back behaviour.

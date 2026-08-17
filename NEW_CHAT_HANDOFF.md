@@ -1,6 +1,6 @@
 # Massage Flow — New Chat Handoff
 
-Use the active **Massage Flow** project as the code baseline. Before editing, read `HANDOFF_MANIFEST.md`, `CURRENT_STATE.md`, this file, `todo.md`, and the relevant documents from `Massage_Flow_Spec_Package_v1.9.zip`, including `SPEC_ADDENDUM_v1.6.md`, `DURATION_EDIT_FIX_v1.7.md`, `SHOULDER_NECK_EXPANSION_v1.8.md`, and `FOREARM_PALM_EXPANSION_v1.9.md`. If the active project is unavailable, attach `Massage_Flow_Prototype_Source_v1.4.zip`, inspect it without executing code, and ask for confirmation before restoring it into a separate Expo project.
+Use the active **Massage Flow** project as the code baseline. Before editing, read `HANDOFF_MANIFEST.md`, `CURRENT_STATE.md`, this file, `todo.md`, and the relevant documents from `Massage_Flow_Spec_Package_v1.10.zip`, including `SPEC_ADDENDUM_v1.6.md`, `DURATION_EDIT_FIX_v1.7.md`, `SHOULDER_NECK_EXPANSION_v1.8.md`, `FOREARM_PALM_EXPANSION_v1.9.md`, and `NAVIGATION_HISTORY_CONTROLS_v1.10.md`. If the active project is unavailable, attach `Massage_Flow_Prototype_Source_v1.5.zip`, inspect it without executing code, and ask for confirmation before restoring it into a separate Expo project.
 
 ## Non-negotiable product rules
 
@@ -13,6 +13,7 @@ Use the active **Massage Flow** project as the code baseline. Before editing, re
 7. The product provides general relaxation guidance only; it does not diagnose, treat, or rehabilitate.
 8. Shoulder-and-neck flow stays on the back-of-neck and outer-shoulder surface; it avoids the front of the neck, throat, sides of the neck, and the centre of the spine.
 9. Forearm-and-palm flow stays on the forearm and palm surface; it avoids the wrist, finger joints, and prominent bony areas.
+10. Preview always provides an explicit return route to the preceding duration setup, while history deletion requires an inline confirmation and removes one entry only.
 
 ## Development sequence
 

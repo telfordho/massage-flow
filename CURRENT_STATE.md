@@ -44,9 +44,13 @@ The shoulder-and-neck flow is strictly limited to the surface of the back of the
 
 The flow stays on the forearm and palm surface, avoiding the wrist, finger joints, and prominent bony areas. Self-guided steps remain directly reachable using the opposite hand. See `FOREARM_PALM_EXPANSION_v1.9.md` for the full boundary.
 
+## Navigation and local-history controls
+
+Program Preview now includes **「返回時長」**, so the user can revise duration without abandoning the setup. Every local history card now supports a guarded, single-entry deletion: the first tap opens an inline confirmation; only an explicit second confirmation removes that entry and triggers the existing local persistence save.
+
 ## Verification result
 
-`pnpm check`, `pnpm test`, and `pnpm lint` pass. The active test suite contains 21 passing tests: 16 deterministic program-rule tests, including shoulder-and-neck and forearm-and-palm boundary coverage plus duration-adjustment regressions, and 5 persistence/history tests. One existing Node module-type performance warning appears during linting but does not produce a lint error. The custom launcher icon is intentionally deferred pending user review; the current review build uses lightweight default image assets.
+`pnpm check`, `pnpm test`, and `pnpm lint` pass. The active test suite contains 22 passing tests: 16 deterministic program-rule tests, including shoulder-and-neck and forearm-and-palm boundary coverage plus duration-adjustment regressions, and 6 persistence/history tests. One existing Node module-type performance warning appears during linting but does not produce a lint error. The custom launcher icon is intentionally deferred pending user review; the current review build uses lightweight default image assets.
 
 ## Next recommended slice
 

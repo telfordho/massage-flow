@@ -7,6 +7,7 @@ import {
   createHistoryEntry,
   HISTORY_LIMIT,
   normalizeStoredData,
+  removeHistoryEntry,
   updateHistoryOutcome,
 } from "./prototype-history";
 
@@ -60,5 +61,13 @@ describe("local history data", () => {
     const next = updateHistoryOutcome([sampleEntry, { ...sampleEntry, id: "session-2" }], "session-2", "舒服咗");
     expect(next[0].outcome).toBeNull();
     expect(next[1].outcome).toBe("舒服咗");
+  });
+
+  it("removes only the selected history entry and keeps remaining entries immutable", () => {
+    const next = removeHistoryEntry([sampleEntry, { ...sampleEntry, id: "session-2" }], "session-1");
+    next[0].targets[0].side = "LEFT";
+
+    expect(next.map((entry) => entry.id)).toEqual(["session-2"]);
+    expect(sampleEntry.targets[0].side).toBe("BOTH");
   });
 });
