@@ -12,3 +12,5 @@
 - [x] Generate a custom Massage Flow launcher-branding concept for user review.
 - [ ] Wait for user approval before including the custom Massage Flow launcher branding in a checkpointed release.
 - [x] Reapply the fixed-order main-segment duration-edit correction after workspace recovery.
+- [x] Restart and verify the development server after the sandbox reset.
+- [x] Make the demonstration and countdown screens vertically scrollable with safe-area spacing below bottom controls.

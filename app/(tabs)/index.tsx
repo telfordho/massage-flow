@@ -9,6 +9,7 @@ import {
   View,
 } from "react-native";
 import Svg, { Circle, Path } from "react-native-svg";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { ScreenContainer } from "@/components/screen-container";
 import {
@@ -151,6 +152,8 @@ function GhostButton({ label, onPress }: { label: string; onPress: () => void })
 }
 
 export default function HomeScreen() {
+  const insets = useSafeAreaInsets();
+  const bottomScrollSpace = Math.max(insets.bottom, 18) + 96;
   const [screen, setScreen] = useState<Screen>("DECLARATION");
   const [hasAcceptedDeclaration, setHasAcceptedDeclaration] = useState(false);
   const [massageMode, setMassageMode] = useState<MassageMode>("SELF");
@@ -798,7 +801,7 @@ export default function HomeScreen() {
   const renderDemo = () => {
     const segment = program.segments[demoIndex];
     return (
-      <View style={styles.demoPage}>
+      <ScrollView style={styles.fullPageScroll} contentContainerStyle={[styles.demoPage, { paddingBottom: bottomScrollSpace }]} showsVerticalScrollIndicator={false}>
         <View style={styles.demoTop}><Text style={styles.stepLabel}>示範 {demoIndex + 1}／{program.segments.length}</Text><GhostButton label="返回預覽" onPress={() => setScreen("PREVIEW")} /></View>
         <View style={styles.demoVisual}><BackMap side={segment.side} regions={[segment.region]} emphasis /><View style={styles.demoNumber}><Text style={styles.demoNumberText}>{demoIndex + 1}</Text></View></View>
         <Text style={styles.segmentPhase}>{phaseLabel[segment.phase]}</Text>
@@ -808,7 +811,7 @@ export default function HomeScreen() {
         {segment.adaptationLabel && <View style={styles.demoAdaptation}><Text style={styles.demoAdaptationText}>{segment.adaptationLabel}：這個步驟已取代較難自行接觸的位置。</Text></View>}
         <View style={styles.demoTip}><Text style={styles.demoTipLabel}>手法</Text><Text style={styles.demoTipText}>{segment.technique} · 輕至中等力度</Text></View>
         <View style={styles.demoNav}><GhostButton label="‹ 上一段" onPress={() => setDemoIndex((index) => Math.max(0, index - 1))} /><PrimaryButton label={demoIndex === program.segments.length - 1 ? "返回程序" : "下一段示範"} onPress={() => demoIndex === program.segments.length - 1 ? setScreen("PREVIEW") : setDemoIndex((index) => index + 1)} /></View>
-      </View>
+      </ScrollView>
     );
   };
 
@@ -819,7 +822,7 @@ export default function HomeScreen() {
       completeSession();
     };
     return (
-      <View style={styles.guidePage}>
+      <ScrollView style={styles.fullPageScroll} contentContainerStyle={[styles.guidePage, { paddingBottom: bottomScrollSpace }]} showsVerticalScrollIndicator={false}>
         <View style={styles.guideTop}><Pressable onPress={() => { setIsRunning(false); setScreen("PREVIEW"); }} style={styles.closeButton}><Text style={styles.closeText}>×</Text></Pressable><View><Text style={styles.guideCounter}>第 {currentIndex + 1}／{program.segments.length} 段</Text><Text style={styles.guideTotal}>總餘 {formatDuration(totalRemaining)}</Text></View></View>
         <View style={styles.progressTrack}><View style={[styles.progressFill, { width: `${progress}%` }]} /></View>
         <View style={styles.guideVisual}><BackMap side={currentSegment.side} regions={[currentSegment.region]} emphasis /></View>
@@ -843,7 +846,7 @@ export default function HomeScreen() {
             <Pressable onPress={finishSession} style={styles.endLink}><Text style={styles.endLinkText}>結束本次流程</Text></Pressable>
           </>
         )}
-      </View>
+      </ScrollView>
     );
   };
 
@@ -1105,7 +1108,8 @@ const styles = StyleSheet.create({
   adaptationBadge: { alignSelf: "flex-start", backgroundColor: "#F9E9E4", borderRadius: 8, paddingHorizontal: 8, paddingVertical: 4, marginTop: 9 },
   adaptationBadgeText: { color: "#9B5947", fontSize: 11, fontWeight: "800" },
   segmentDemoLink: { color: "#1F4D4A", fontSize: 13, fontWeight: "700", marginTop: 12 },
-  demoPage: { flex: 1, padding: 24, paddingBottom: 28 },
+  fullPageScroll: { flex: 1 },
+  demoPage: { flexGrow: 1, padding: 24 },
   demoTop: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
   demoVisual: { backgroundColor: "#F0F2EA", borderRadius: 28, alignItems: "center", marginVertical: 14, position: "relative" },
   demoNumber: { position: "absolute", top: 18, right: 18, width: 34, height: 34, borderRadius: 17, backgroundColor: "#D77A61", alignItems: "center", justifyContent: "center" },
@@ -1119,7 +1123,7 @@ const styles = StyleSheet.create({
   demoTipLabel: { color: "#A75B48", fontSize: 12, fontWeight: "700" },
   demoTipText: { color: "#1B2523", fontSize: 15, fontWeight: "600", marginTop: 5 },
   demoNav: { flexDirection: "row", gap: 10, marginTop: "auto", paddingTop: 20 },
-  guidePage: { flex: 1, padding: 24, paddingBottom: 18 },
+  guidePage: { flexGrow: 1, padding: 24 },
   guideTop: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
   closeButton: { width: 42, height: 42, borderRadius: 21, backgroundColor: "#ECEEEA", alignItems: "center", justifyContent: "center" },
   closeText: { fontSize: 27, color: "#42534D", marginTop: -3 },
@@ -1127,7 +1131,7 @@ const styles = StyleSheet.create({
   guideTotal: { color: "#6D7B76", fontSize: 13, marginTop: 3, textAlign: "right" },
   progressTrack: { height: 5, backgroundColor: "#DCE9E3", borderRadius: 3, marginTop: 18, overflow: "hidden" },
   progressFill: { height: "100%", backgroundColor: "#D77A61", borderRadius: 3 },
-  guideVisual: { flex: 1, minHeight: 242, justifyContent: "center", alignItems: "center" },
+  guideVisual: { minHeight: 242, justifyContent: "center", alignItems: "center" },
   guidePhase: { color: "#A75B48", fontSize: 12, fontWeight: "700", letterSpacing: 0.7, textAlign: "center" },
   guideTitle: { color: "#1B2523", fontSize: 29, fontWeight: "700", textAlign: "center", marginTop: 6 },
   guideLocation: { color: "#65736E", fontSize: 14, textAlign: "center", marginTop: 4 },
