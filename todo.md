@@ -29,3 +29,6 @@
 - [x] Add an explicit back action from the program preview to the preceding setup screen.
 - [x] Add confirmed single-entry deletion for local session history and persist the result.
 - [x] Add regression tests for history deletion and preview-back behaviour.
+- [x] Confirm restored Markdown documentation is present and non-empty; guide Code-panel refresh without changing the selected functional baseline.
+- [x] Create a complete copy-ready new-chat handoff procedure for the current rolled-back version.
+- [x] Restore handoff documents, v1.10 specification ZIP, and reference materials to both workspace and shared project files.
