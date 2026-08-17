@@ -31,3 +31,6 @@
 - [x] Add regression tests for history deletion and preview-back behaviour.
 - [x] Consolidate versioned documentation and ZIP archives into one current handoff baseline and archive superseded materials.
 - [x] Rewrite the new-chat handoff guide with the consolidated recovery workflow.
+- [x] Prepare downloadable complete-baseline and current-source archives for the user.
+- [x] Provide a complete copy-ready new-chat handoff procedure for the consolidated baseline.
+- [x] Investigate and correct the project ChatBot’s stale progress source.

@@ -15,6 +15,12 @@ This directory is the **only active Massage Flow baseline**. Start with this fil
 
 All earlier versioned packages and incremental addenda are retained under `archive/legacy-versioned-materials/` for reference only. They are not required for ordinary work.
 
+## Project ChatBot synchronization
+
+The project ChatBot reads the **shared project files**, not the WebDev working directory automatically. Whenever the current baseline changes, synchronize these six files to the project shared-file area before asking the ChatBot about progress: `START_HERE.md`, `PRODUCT_SPEC.md`, `CURRENT_STATE.md`, `design.md`, `todo.md`, and `Massage_Flow_Complete_Baseline.zip`. Apply the shared-file update through project configuration, then ask the ChatBot again in a new message.
+
+If the ChatBot reports an older milestone, compare its shared `CURRENT_STATE.md` with the active project file first. Do not treat a ChatBot answer as the source of truth until that comparison matches.
+
 ## New-chat workflow
 
 1. Work in the active `massage-flow-restored` project whenever it is available. Read the five active Markdown files listed above before changing behaviour.
