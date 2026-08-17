@@ -563,7 +563,6 @@ export default function HomeScreen() {
           <Text style={styles.heroTitle}>由概括部位，{`\n`}開始一套有節奏的放鬆。</Text>
         </View>
         <View style={styles.heroActions}>
-          <Pressable onPress={() => setScreen("HISTORY")} style={({ pressed }) => [styles.historyBadge, pressed && styles.optionCardPressed]}><Text style={styles.historyBadgeText}>歷史</Text></Pressable>
           <Pressable onPress={() => massageMode === "SELF" ? setScreen("MODE") : setScreen("MEMBER")} style={styles.badge}><Text style={styles.badgeText}>{selectedMember.label}</Text></Pressable>
         </View>
       </View>
@@ -573,6 +572,14 @@ export default function HomeScreen() {
         <Text style={styles.cardText}>{massageMode === "SELF" ? "可揀上背、中背或下背；較難自行接觸嘅位置會清楚標示替代流程。" : "可按優先次序揀上背、中背及下背，系統會安排完整嘅按摩者動作流程。"}</Text>
         <BackMap side="BOTH" regions={regionOptions} />
       </View>
+      <Pressable onPress={() => setScreen("HISTORY")} style={({ pressed }) => [styles.historyEntryCard, pressed && styles.optionCardPressed]}>
+        <View style={styles.historyEntryIcon}><Text style={styles.historyEntryIconText}>↺</Text></View>
+        <View style={styles.historyEntryCopy}>
+          <Text style={styles.historyEntryTitle}>流程歷史</Text>
+          <Text style={styles.historyEntryText}>{history.length > 0 ? `你有 ${history.length} 個已完成流程，可查看或重做同一套設定。` : "完成流程後，會喺呢度保存紀錄同回饋。"}</Text>
+        </View>
+        <Text style={styles.historyEntryArrow}>›</Text>
+      </Pressable>
       <View style={styles.noteCard}>
         <Text style={styles.noteTitle}>倒數前，先看懂安排</Text>
         <Text style={styles.noteText}>程序預覽會說明系統如何按部位、優先次序與時長，細分成可跟隨的幾個階段。</Text>
@@ -858,6 +865,10 @@ export default function HomeScreen() {
       <Text style={styles.doneText}>你完成咗 {completedCount === 0 ? program.segments.length : completedCount} 個安排段落。呢個感受只會喺本機 Prototype 裡面記低。</Text>
       <View style={styles.outcomeStack}>{(["舒服咗", "差唔多", "更加唔舒服"] as const).map((item) => <Pressable key={item} onPress={() => recordOutcome(item)} style={({ pressed }) => [styles.outcomeButton, outcome === item && styles.outcomeButtonSelected, pressed && styles.optionCardPressed]}><Text style={[styles.outcomeText, outcome === item && styles.outcomeTextSelected]}>{item}</Text></Pressable>)}</View>
       {outcome === "更加唔舒服" && <View style={styles.cautionCard}><Text style={styles.cautionText}>請停止今次流程，並按需要搵合適嘅協助。本 Prototype 唔會提供診斷。</Text></View>}
+      <Pressable onPress={() => setScreen("HISTORY")} style={({ pressed }) => [styles.doneHistoryEntry, pressed && styles.optionCardPressed]}>
+        <View><Text style={styles.doneHistoryTitle}>今次流程已保存</Text><Text style={styles.doneHistoryText}>查看歷史紀錄，或者用相同設定再做一次。</Text></View>
+        <Text style={styles.doneHistoryArrow}>›</Text>
+      </Pressable>
       <View style={styles.donePrimaryAction}><PrimaryButton label="重新揀使用方式" onPress={resetPrototype} /></View>
     </ScrollView>
   );
@@ -928,8 +939,6 @@ const styles = StyleSheet.create({
   heroTitle: { color: "#1B2523", fontSize: 32, lineHeight: 39, fontWeight: "700", marginTop: 10, letterSpacing: -0.6 },
   badge: { backgroundColor: "#DCE9E3", borderRadius: 999, paddingHorizontal: 12, paddingVertical: 7 },
   badgeText: { color: "#1F4D4A", fontSize: 13, fontWeight: "700" },
-  historyBadge: { minHeight: 34, paddingHorizontal: 11, borderRadius: 10, backgroundColor: "#F1E7DC", alignItems: "center", justifyContent: "center" },
-  historyBadgeText: { color: "#8A5B50", fontSize: 13, fontWeight: "800" },
   homeCard: { backgroundColor: "#FFFFFF", borderRadius: 28, padding: 22, borderWidth: 1, borderColor: "#E5E8E3", shadowColor: "#1B2523", shadowOpacity: 0.05, shadowRadius: 20, elevation: 2 },
   cardKicker: { color: "#55706A", fontSize: 13, fontWeight: "600" },
   cardTitle: { color: "#1B2523", fontSize: 24, fontWeight: "700", marginTop: 6 },
@@ -938,6 +947,13 @@ const styles = StyleSheet.create({
   mapCaption: { flexDirection: "row", alignItems: "center", gap: 7, marginTop: -8 },
   mapDot: { width: 8, height: 8, borderRadius: 4, backgroundColor: "#1F4D4A" },
   mapCaptionText: { color: "#55706A", fontSize: 12, fontWeight: "600" },
+  historyEntryCard: { minHeight: 92, backgroundColor: "#E7F0EB", borderRadius: 20, padding: 16, flexDirection: "row", alignItems: "center", gap: 13, borderWidth: 1, borderColor: "#C9DED3" },
+  historyEntryIcon: { width: 44, height: 44, borderRadius: 14, backgroundColor: "#1F4D4A", alignItems: "center", justifyContent: "center" },
+  historyEntryIconText: { color: "#FFFFFF", fontSize: 25, fontWeight: "500", marginTop: -2 },
+  historyEntryCopy: { flex: 1 },
+  historyEntryTitle: { color: "#1F4D4A", fontSize: 17, fontWeight: "800" },
+  historyEntryText: { color: "#587068", fontSize: 13, lineHeight: 19, marginTop: 3 },
+  historyEntryArrow: { color: "#1F4D4A", fontSize: 30, fontWeight: "300", marginTop: -3 },
   noteCard: { backgroundColor: "#EEEAE0", borderRadius: 20, padding: 18 },
   noteTitle: { color: "#1B2523", fontSize: 16, fontWeight: "700" },
   noteText: { color: "#5C6965", fontSize: 14, lineHeight: 21, marginTop: 6 },
@@ -1165,6 +1181,10 @@ const styles = StyleSheet.create({
   outcomeTextSelected: { color: "#1F4D4A" },
   cautionCard: { backgroundColor: "#F9E9E4", borderRadius: 14, padding: 14, width: "100%", marginBottom: 14 },
   cautionText: { color: "#824B3D", fontSize: 13, lineHeight: 20, textAlign: "center" },
+  doneHistoryEntry: { width: "100%", borderRadius: 17, backgroundColor: "#E7F0EB", borderWidth: 1, borderColor: "#C9DED3", padding: 16, marginBottom: 14, flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 12 },
+  doneHistoryTitle: { color: "#1F4D4A", fontSize: 16, fontWeight: "800" },
+  doneHistoryText: { color: "#587068", fontSize: 13, lineHeight: 19, marginTop: 3, maxWidth: 246 },
+  doneHistoryArrow: { color: "#1F4D4A", fontSize: 30, fontWeight: "300", marginTop: -3 },
   donePrimaryAction: { width: "100%", maxWidth: 320, height: 56, alignSelf: "center" },
   historyList: { padding: 24, paddingBottom: 32, gap: 12, flexGrow: 1 },
   historyHeader: { gap: 12, marginBottom: 6 },

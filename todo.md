@@ -14,3 +14,5 @@
 - [x] Reapply the fixed-order main-segment duration-edit correction after workspace recovery.
 - [x] Restart and verify the development server after the sandbox reset.
 - [x] Make the demonstration and countdown screens vertically scrollable with safe-area spacing below bottom controls.
+- [ ] Validate AsyncStorage persistence, history, and preview-gated repeat flow on a physical device after restarting the app.
+- [x] Make the session-history entry more prominent on the home and completion flows.
