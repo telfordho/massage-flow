@@ -66,3 +66,4 @@
 - [x] Add the missing elbow-side forearm highlight segment while keeping the upper arm and shoulder neutral.
 - [x] Move forearm highlights away from the red-arrow upper excess and into the blue-marked wrist-side gaps on both arms.
 - [x] Replace the remaining gapped forearm overlay with a continuous elbow-to-fist surface highlight on both arms.
+- [x] Fix independent left, right, and bilateral 3D forearm-and-palm highlighting to match the selected side exactly.

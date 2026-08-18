@@ -65,10 +65,15 @@ function Mannequin({
 }: ThreeBodyGuideProps & { rotation: number; zoom: number }) {
   const material = useMemo(() => new THREE.MeshStandardMaterial({ color: BODY, roughness: 0.8 }), []);
   const forearmTarget = targetForRegion(targets, "FOREARM_PALM");
-  const forearmSelected = Boolean(forearmTarget);
   const forearmActive = activeTarget?.region === "FOREARM_PALM";
-  const forearmColor = forearmSelected ? (emphasis && forearmActive ? EMPHASIS : ACTIVE) : BODY;
-  const forearmMaterial = useMemo(() => new THREE.MeshStandardMaterial({ color: forearmColor, roughness: 0.58 }), [forearmColor]);
+  const forearmColor = (side: Side) => {
+    const selected = Boolean(forearmTarget && threeBodyTargetIncludesSide(forearmTarget.side, side));
+    return selected ? (emphasis && forearmActive ? EMPHASIS : ACTIVE) : BODY;
+  };
+  const leftForearmColor = forearmColor("LEFT");
+  const rightForearmColor = forearmColor("RIGHT");
+  const leftForearmMaterial = useMemo(() => new THREE.MeshStandardMaterial({ color: leftForearmColor, roughness: 0.58 }), [leftForearmColor]);
+  const rightForearmMaterial = useMemo(() => new THREE.MeshStandardMaterial({ color: rightForearmColor, roughness: 0.58 }), [rightForearmColor]);
   const forearmClick = mode === "REGION_SELECTION"
     ? () => onToggleRegion?.("FOREARM_PALM")
     : mode === "SIDE_SELECTION" && activeTarget?.region === "FOREARM_PALM"
@@ -82,10 +87,10 @@ function Mannequin({
       <mesh position={[0.65, 1.2, -0.02]} rotation={[0, 0, 0.8]} material={material}><capsuleGeometry args={[0.17, 0.3, 10, 18]} /></mesh>
       <mesh position={[-0.82, 0.91, -0.02]} rotation={[0, 0, -0.2]} material={material}><capsuleGeometry args={[0.14, 0.48, 10, 18]} /></mesh>
       <mesh position={[0.82, 0.91, -0.02]} rotation={[0, 0, 0.2]} material={material}><capsuleGeometry args={[0.14, 0.48, 10, 18]} /></mesh>
-      <mesh position={[-0.98, 0.05, -0.02]} rotation={[0, 0, -0.2]} material={forearmMaterial} onClick={() => forearmClick?.("LEFT")}><capsuleGeometry args={[0.145, 0.72, 10, 18]} /></mesh>
-      <mesh position={[0.98, 0.05, -0.02]} rotation={[0, 0, 0.2]} material={forearmMaterial} onClick={() => forearmClick?.("RIGHT")}><capsuleGeometry args={[0.145, 0.72, 10, 18]} /></mesh>
-      <mesh position={[-1.06, -0.37, -0.02]} material={forearmMaterial} onClick={() => forearmClick?.("LEFT")}><sphereGeometry args={[0.24, 20, 20]} /></mesh>
-      <mesh position={[1.06, -0.37, -0.02]} material={forearmMaterial} onClick={() => forearmClick?.("RIGHT")}><sphereGeometry args={[0.24, 20, 20]} /></mesh>
+      <mesh position={[-0.98, 0.05, -0.02]} rotation={[0, 0, -0.2]} material={leftForearmMaterial} onClick={() => forearmClick?.("LEFT")}><capsuleGeometry args={[0.145, 0.72, 10, 18]} /></mesh>
+      <mesh position={[0.98, 0.05, -0.02]} rotation={[0, 0, 0.2]} material={rightForearmMaterial} onClick={() => forearmClick?.("RIGHT")}><capsuleGeometry args={[0.145, 0.72, 10, 18]} /></mesh>
+      <mesh position={[-1.06, -0.37, -0.02]} material={leftForearmMaterial} onClick={() => forearmClick?.("LEFT")}><sphereGeometry args={[0.24, 20, 20]} /></mesh>
+      <mesh position={[1.06, -0.37, -0.02]} material={rightForearmMaterial} onClick={() => forearmClick?.("RIGHT")}><sphereGeometry args={[0.24, 20, 20]} /></mesh>
       <mesh position={[-0.31, -1.45, 0]} material={material}><capsuleGeometry args={[0.23, 1.65, 12, 20]} /></mesh>
       <mesh position={[0.31, -1.45, 0]} material={material}><capsuleGeometry args={[0.23, 1.65, 12, 20]} /></mesh>
       <SurfacePatch region="SHOULDER_NECK" side="LEFT" targets={targets} activeTarget={activeTarget} mode={mode} emphasis={Boolean(emphasis)} onToggleRegion={onToggleRegion} onSelectSide={onSelectSide} />
