@@ -5,8 +5,8 @@
 | Updated | 2026-08-18 |
 | Runnable code baseline | Isolated **massage-flow-restored** Expo / React Native project |
 | Source restored from | `Massage_Flow_Prototype_Source_v1.0.zip` |
-| Latest specification package | `Massage_Flow_Spec_Package_v1.13.zip` |
-| Latest handoff package | `Massage_Flow_Handoff_Package_v2.1.zip` |
+| Latest specification package | `Massage_Flow_Spec_Package_v1.14.zip` |
+| Latest handoff package | `Massage_Flow_Handoff_Package_v2.2.zip` |
 | Product language | Cantonese Traditional Chinese for all user-facing content |
 | Current milestone | Native 3D body foundation is implemented; physical-device WebGL validation is pending |
 
@@ -62,9 +62,9 @@ The visual layer reads the same `region + side` data that program generation alr
 
 ## Native 3D body foundation
 
-On iOS and Android, selection, laterality, preview, demonstration, and countdown now use a stylised Three.js body mannequin rendered through React Three Fiber and Expo GL. The mannequin supports horizontal-drag rotation, constrained one-handed **縮小／放大** controls, and **重設視角**. Back-surface regions open in a back view, while forearm-and-palm opens in an arm-focused front view. The existing vector map remains the web and graphics-initialization fallback.
+Selection, laterality, preview, demonstration, and countdown now use a stylised Three.js body mannequin. Native iOS and Android render through React Three Fiber and Expo GL; the web/mobile-preview route uses the React Three Fiber web Canvas. The mannequin supports horizontal-drag rotation, constrained one-handed **縮小／放大** controls, and **重設視角**. Back-surface regions open in a back view, while forearm-and-palm opens in an arm-focused front view. The existing vector map remains only as a WebGL-unavailable fallback.
 
-Only approved `region + side` data drives the 3D overlay. The 3D layer does not create new targets, make excluded surfaces interactive, or change self-guided substitutes. Automated mapping tests pass, but this native WebGL layer still requires physical iOS and Android validation. See `THREE_D_RENDERING_DECISION_v1.13.md` for the technical decision and test boundary.
+Only approved `region + side` data drives the 3D overlay. The 3D layer does not create new targets, make excluded surfaces interactive, or change self-guided substitutes. Automated mapping tests pass, and the mobile web preview now renders the 3D model; native iOS and Android rendering still requires physical-device validation. See `THREE_D_RENDERING_DECISION_v1.13.md` and `WEB_3D_PREVIEW_FIX_v1.14.md` for the implementation history and test boundary.
 
 ## Verification result
 

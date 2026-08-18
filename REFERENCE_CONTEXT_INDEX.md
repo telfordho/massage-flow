@@ -2,7 +2,7 @@
 
 ## Current working baseline
 
-For current implementation status and new work, read `HANDOFF_MANIFEST.md`, `CURRENT_STATE.md`, `NEW_CHAT_HANDOFF.md`, and `todo.md` first. The complete current specification package is `Massage_Flow_Spec_Package_v1.13.zip`.
+For current implementation status and new work, read `HANDOFF_MANIFEST.md`, `CURRENT_STATE.md`, `NEW_CHAT_HANDOFF.md`, and `todo.md` first. The complete current specification package is `Massage_Flow_Spec_Package_v1.14.zip`.
 
 ## Detailed reference files
 
@@ -13,7 +13,7 @@ The `REFERENCE_*` files restore the detailed v1.5 source specifications and late
 | `REFERENCE_01` to `REFERENCE_07` | Product, technical, project overview, UI flow, test plan, engineering standards, and data contracts. |
 | `REFERENCE_DECISION_LOG` / `REFERENCE_CHANGELOG` | Historic product decisions and specification evolution. |
 | `REFERENCE_SAFETY_RESEARCH` / `REFERENCE_TECHNICAL_RESEARCH` | Background research. |
-| `REFERENCE_SPEC_ADDENDUM_v1.6` to `REFERENCE_THREE_D_RENDERING_v1.13` | Later implemented persistence, duration editing, body-region, navigation/history, shared visual-guidance, and native 3D foundation changes. |
+| `REFERENCE_SPEC_ADDENDUM_v1.6` to `REFERENCE_WEB_3D_PREVIEW_FIX_v1.14` | Later implemented persistence, duration editing, body-region, navigation/history, shared visual-guidance, native 3D foundation, and web-preview 3D changes. |
 
 ## New Chat rule
 

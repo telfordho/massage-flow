@@ -47,3 +47,4 @@
 - [x] Add regression coverage and validate 3D mapping and safety behaviour without weakening existing safety rules.
 - [ ] Validate native 3D canvas rotation, zoom, safe highlights, fallback behaviour, and segment continuity on physical iOS and Android devices.
 - [x] Update 3D visual-guidance documentation and handoff materials after verification.
+- [x] Fix the mobile preview path so the intended 3D body model is visibly rendered instead of only the vector fallback.
