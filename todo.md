@@ -63,3 +63,4 @@
 - [x] Add spherical fist geometry at both hand positions and connect forearm selection highlighting through to the hand visual.
 - [x] Limit forearm-and-palm highlighting to the user-marked forearm segment and enlarged fist spheres, keeping all surrounding upper-arm areas neutral.
 - [x] Align forearm-and-palm highlighting to the marked forearm span and enlarge both fist spheres in neutral and selected 3D states.
+- [x] Add the missing elbow-side forearm highlight segment while keeping the upper arm and shoulder neutral.
