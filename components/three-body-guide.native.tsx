@@ -28,14 +28,13 @@ function SurfacePatch({
   const selectedTarget = targetForRegion(targets, region);
   const selected = Boolean(selectedTarget && threeBodyTargetIncludesSide(selectedTarget.side, side));
   const isCurrent = activeTarget?.region === region && threeBodyTargetIncludesSide(activeTarget.side, side);
-  const interactive = mode === "REGION_SELECTION" || (mode === "SIDE_SELECTION" && activeTarget?.region === region);
   const color = selected ? (emphasis && isCurrent ? EMPHASIS : ACTIVE) : "#B8CDC2";
   const click = mode === "REGION_SELECTION"
     ? () => onToggleRegion?.(region)
     : mode === "SIDE_SELECTION" && activeTarget?.region === region
       ? () => onSelectSide?.(side)
       : undefined;
-  const opacity = selected ? 0.9 : interactive ? 0.24 : 0.08;
+  const opacity = selected ? 0.9 : 0;
 
   if (region === "FOREARM_PALM") {
     return (

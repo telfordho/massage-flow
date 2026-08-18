@@ -53,3 +53,4 @@
 - [x] Fix invisible selected-state highlights for shoulder-and-neck and back regions on the 3D mannequin.
 - [x] Replace flat circular 3D highlight stickers with curved, body-conforming region surfaces for all approved torso targets.
 - [x] Extend the 3D shoulder-and-neck overlay to the approved outer-shoulder and upper-back junction, and make the full approved forearm span directly tappable and highlighted.
+- [x] Fix the 3D initialization state so no region or forearm appears highlighted before the user selects it.
