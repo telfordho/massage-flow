@@ -70,3 +70,6 @@
 - [x] Create a review-only upgraded 2D body-summary card mockup before any production integration.
 - [x] Replace the broad-region selection page with a reference-style, touchable 2D body map while preserving existing selection and safety rules.
 - [x] Validate the 2D selection page for each approved region and side before deciding whether to replace 3D guidance elsewhere.
+- [x] Rebuild a detailed, full-body back-view outline with touchable safe-region highlights as phase one of the approved 2D selection redesign.
+- [ ] Obtain user approval of full-body proportions and highlight placement before adding selected-region label cards in phase two.
+- [ ] Rebuild the 2D selection page around the approved detailed full-body back-view reference with dynamic safe-region highlights and selected-region labels.
