@@ -2,7 +2,7 @@ export type BodySide = "LEFT" | "RIGHT" | "BOTH";
 
 export type MassageMode = "SELF" | "HELP_OTHER";
 
-export type BodyRegion = "SHOULDER_NECK" | "FOREARM_PALM" | "UPPER_BACK" | "MID_BACK" | "LOWER_BACK";
+export type BodyRegion = "SHOULDER_NECK" | "FOREARM_PALM" | "UPPER_BACK" | "MID_BACK" | "LOWER_BACK" | "UPPER_HIP";
 
 export type Sensation = "TIGHT" | "SORE" | "STIFF" | "TENDER" | "RELAX";
 
@@ -118,6 +118,12 @@ export const REGION_DETAILS: Record<BodyRegion, { label: string; shortLabel: str
     shortLabel: "下背",
     selfHint: "只會處理腰側較易掂到嘅位置，唔會安排脊柱正中動作。",
     helperHint: "可以安排下背兩側嘅輕柔放鬆流程。",
+  },
+  UPPER_HIP: {
+    label: "臀髖上緣",
+    shortLabel: "臀髖",
+    selfHint: "只安排臀髖上緣同髖骨外側表面；會避開臀裂、尾骨、腹股溝同骨盆正中。",
+    helperHint: "只安排臀髖上緣同髖骨外側嘅輕柔表面流程；唔會處理臀裂、尾骨、腹股溝或骨盆正中。",
   },
 };
 
@@ -235,6 +241,21 @@ function mainStepsFor(target: RegionTarget, mode: MassageMode) {
     return [
       step("mid-back-paraspinal", "MAIN", target, "中背兩側肌群", "脊柱兩側嘅中背軟組織", "掌心緩推", `${prefix}，沿中背兩側以掌心慢慢推撫，避開脊柱正中。`),
       step("mid-back-side", "MAIN", target, "中背側邊", "肩胛下方至側背", "輕柔揉動", `喺${side}中背側邊細範圍輕柔揉動，再慢慢放開。`),
+    ];
+  }
+
+  if (target.region === "UPPER_HIP") {
+    const safetyBoundary = "全程只處理臀髖上緣同髖骨外側嘅表面，避開臀裂、尾骨、腹股溝同骨盆正中。";
+    if (mode === "SELF") {
+      return [
+        step("self-upper-hip-surface", "MAIN", target, "臀髖上緣表面放鬆", "腰側下方至臀髖上緣較易掂到嘅表面", "隔住衣物掌心慢推", `${prefix}，隔住衣物，用掌心喺腰側下方至臀髖上緣較平坦嘅表面作短而慢嘅輕推。${safetyBoundary}`),
+        step("self-outer-hip-substitute", "MAIN", target, "髖骨外側替代放鬆", "髖骨外側較易掂到嘅表面", "掌心輕貼停留", "臀髖上緣較難自己控制範圍；改喺髖骨外側較易掂到嘅表面以掌心短暫輕貼停留。" + safetyBoundary, "SUBSTITUTE_ONLY", "自己按替代動作"),
+      ];
+    }
+    return [
+      step("upper-hip-surface-glide", "MAIN", target, "臀髖上緣表面慢推", "腰側下方至臀髖上緣嘅表面", "掌心慢推", `${prefix}，以掌心喺臀髖上緣較平坦嘅表面作短而慢嘅輕推。${safetyBoundary}`),
+      step("outer-hip-surface-glide", "MAIN", target, "髖骨外側推撫", "髖骨外側嘅表面", "掌心短推撫", `${prefix}，喺髖骨外側嘅表面以較輕力度短暫推撫，再慢慢放開。${safetyBoundary}`),
+      step("upper-hip-release", "MAIN", target, "臀髖上緣輕貼放鬆", "臀髖上緣及髖骨外側表面", "掌心停留", `${prefix}，喺臀髖上緣及髖骨外側表面短暫輕貼停留，保持舒適力度。${safetyBoundary}`),
     ];
   }
 

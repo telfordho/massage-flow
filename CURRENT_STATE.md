@@ -2,13 +2,13 @@
 
 | Field | Current value |
 |---|---|
-| Updated | 2026-08-17 |
+| Updated | 2026-08-18 |
 | Runnable code baseline | Isolated **massage-flow-restored** Expo / React Native project |
 | Source restored from | `Massage_Flow_Prototype_Source_v1.0.zip` |
-| Latest specification package | `Massage_Flow_Spec_Package_v1.5.zip` |
-| Latest handoff package | `Massage_Flow_Handoff_Package_v1.3.zip` |
+| Latest specification package | `Massage_Flow_Spec_Package_v1.11.zip` |
+| Latest handoff package | `Massage_Flow_Handoff_Package_v1.9.zip` |
 | Product language | Cantonese Traditional Chinese for all user-facing content |
-| Current milestone | Source restoration, local persistence/history, safe replay, shoulder-and-neck, and forearm-and-palm expansions are complete |
+| Current milestone | Source restoration, local persistence/history, safe replay, shoulder-and-neck, forearm-and-palm, and upper-hip expansions are complete |
 
 > This project is a general relaxation-guidance prototype. It does not diagnose, treat, rehabilitate, or provide medical advice.
 
@@ -48,9 +48,15 @@ The flow stays on the forearm and palm surface, avoiding the wrist, finger joint
 
 Program Preview now includes **「返回時長」**, so the user can revise duration without abandoning the setup. Every local history card now supports a guarded, single-entry deletion: the first tap opens an inline confirmation; only an explicit second confirmation removes that entry and triggers the existing local persistence save.
 
+## Upper-hip expansion
+
+**臀髖上緣** is now a selectable broad region with left, right, and both-side support. It uses the existing preview, guidance, local-history, and replay paths.
+
+The flow remains on the upper-hip and outer-hip surface only. It explicitly avoids the gluteal cleft, tailbone, groin, and centre of the pelvis. In self-guided mode, the first step is over clothing and the harder-to-control range is replaced by an approved outer-hip substitute. See `UPPER_HIP_EXPANSION_v1.11.md` for the full boundary.
+
 ## Verification result
 
-`pnpm check`, `pnpm test`, and `pnpm lint` pass. The active test suite contains 22 passing tests: 16 deterministic program-rule tests, including shoulder-and-neck and forearm-and-palm boundary coverage plus duration-adjustment regressions, and 6 persistence/history tests. One existing Node module-type performance warning appears during linting but does not produce a lint error. The custom launcher icon is intentionally deferred pending user review; the current review build uses lightweight default image assets.
+`pnpm check`, `pnpm test`, and `pnpm lint` pass. The active test suite contains 24 passing tests: 18 deterministic program-rule tests, including shoulder-and-neck, forearm-and-palm, and upper-hip boundary coverage plus duration-adjustment regressions, and 6 persistence/history tests. One existing Node module-type performance warning appears during linting but does not produce a lint error. The custom launcher icon is intentionally deferred pending user review; the current review build uses lightweight default image assets.
 
 ## Next recommended slice
 

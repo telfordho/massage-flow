@@ -33,3 +33,7 @@
 - [x] Create a complete copy-ready new-chat handoff procedure for the current rolled-back version.
 - [x] Restore handoff documents, v1.10 specification ZIP, and reference materials to both workspace and shared project files.
 - [x] Restore stable preview startup for the rolled-back project before physical-device validation.
+- [x] Define upper-hip general-relaxation safety boundaries and self-versus-assisted accessibility rules.
+- [x] Add upper-hip program generation, selection, preview, guidance, history, and repeat-flow support.
+- [x] Add regression tests for upper-hip safety and deterministic program rules.
+- [x] Update documentation and handoff materials for the upper-hip expansion.

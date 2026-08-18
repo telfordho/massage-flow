@@ -87,6 +87,32 @@ describe("generateMassageProgram", () => {
     expect(mainSegments.every((segment) => segment.instruction.includes("避開手腕、手指關節同突出的骨位"))).toBe(true);
   });
 
+  it("creates an upper-hip helper program that remains inside the approved surface boundary", () => {
+    const program = generateMassageProgram(10, [{ region: "UPPER_HIP", side: "BOTH" }], "HELP_OTHER");
+    const mainSegments = program.segments.filter((segment) => segment.phase === "MAIN");
+
+    expect(mainSegments.map((segment) => segment.muscleName)).toEqual([
+      "臀髖上緣表面慢推",
+      "髖骨外側推撫",
+      "臀髖上緣輕貼放鬆",
+    ]);
+    expect(mainSegments.every((segment) => segment.region === "UPPER_HIP")).toBe(true);
+    expect(mainSegments.every((segment) => segment.instruction.includes("避開臀裂、尾骨、腹股溝同骨盆正中"))).toBe(true);
+    expect(program.segments.reduce((sum, segment) => sum + segment.durationSec, 0)).toBe(600);
+  });
+
+  it("uses an approved upper-hip substitute for self massage", () => {
+    const program = generateMassageProgram(5, [{ region: "UPPER_HIP", side: "LEFT" }], "SELF");
+    const mainSegments = program.segments.filter((segment) => segment.phase === "MAIN");
+
+    expect(mainSegments.find((segment) => segment.reachability === "SUBSTITUTE_ONLY")).toMatchObject({
+      muscleName: "髖骨外側替代放鬆",
+      adaptationLabel: "自己按替代動作",
+    });
+    expect(mainSegments.every((segment) => segment.side === "LEFT")).toBe(true);
+    expect(mainSegments.every((segment) => segment.instruction.includes("避開臀裂、尾骨、腹股溝同骨盆正中"))).toBe(true);
+  });
+
   it("creates distinct middle and lower back steps, with self-mode substitutions", () => {
     const selfProgram = generateMassageProgram(10, [
       { region: "MID_BACK", side: "BOTH" },

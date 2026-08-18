@@ -54,8 +54,8 @@ const sideOptions: { value: BodySide; label: string; helper: string }[] = [
   { value: "BOTH", label: "雙側", helper: "左右平均安排" },
   { value: "RIGHT", label: "右側", helper: "集中處理右邊位置" },
 ];
-const backRegionOptions: BodyRegion[] = ["SHOULDER_NECK", "UPPER_BACK", "MID_BACK", "LOWER_BACK"];
-const regionOptions: BodyRegion[] = ["SHOULDER_NECK", "FOREARM_PALM", "UPPER_BACK", "MID_BACK", "LOWER_BACK"];
+const backRegionOptions: BodyRegion[] = ["SHOULDER_NECK", "UPPER_BACK", "MID_BACK", "LOWER_BACK", "UPPER_HIP"];
+const regionOptions: BodyRegion[] = ["SHOULDER_NECK", "FOREARM_PALM", "UPPER_BACK", "MID_BACK", "LOWER_BACK", "UPPER_HIP"];
 const sensationOptions: { value: Sensation; label: string }[] = [
   { value: "TIGHT", label: "繃緊" },
   { value: "SORE", label: "酸攰" },
@@ -125,6 +125,7 @@ function BackMap({ side, regions = ["UPPER_BACK"], emphasis = false }: { side: B
   const upper = regions.includes("UPPER_BACK");
   const middle = regions.includes("MID_BACK");
   const lower = regions.includes("LOWER_BACK");
+  const upperHip = regions.includes("UPPER_HIP");
   const activeColor = emphasis ? "#D77A61" : "#1F4D4A";
 
   return (
@@ -162,6 +163,8 @@ function BackMap({ side, regions = ["UPPER_BACK"], emphasis = false }: { side: B
         <Path d="M135 112 C124 104 114 109 108 119 L110 148 L130 143 Z" fill={middle && showRight ? activeColor : "#DCE9E3"} opacity={middle && showRight ? 0.96 : 0.55} />
         <Path d="M77 151 L96 154 L96 183 L80 180 Z" fill={lower && showLeft ? activeColor : "#DCE9E3"} opacity={lower && showLeft ? 0.96 : 0.55} />
         <Path d="M129 151 L110 154 L110 183 L126 180 Z" fill={lower && showRight ? activeColor : "#DCE9E3"} opacity={lower && showRight ? 0.96 : 0.55} />
+        <Path d="M79 184 C85 180 92 181 96 188 L95 205 L80 201 Z" fill={upperHip && showLeft ? activeColor : "#DCE9E3"} opacity={upperHip && showLeft ? 0.96 : 0.55} />
+        <Path d="M127 184 C121 180 114 181 110 188 L111 205 L126 201 Z" fill={upperHip && showRight ? activeColor : "#DCE9E3"} opacity={upperHip && showRight ? 0.96 : 0.55} />
       </Svg>
       <View style={styles.mapCaption}>
         <View style={styles.mapDot} />
@@ -621,7 +624,7 @@ export default function HomeScreen() {
       <View style={styles.homeCard}>
         <Text style={styles.cardKicker}>本機家庭成員 · {selectedMember.label}</Text>
         <Text style={styles.cardTitle}>由部位開始安排</Text>
-        <Text style={styles.cardText}>{massageMode === "SELF" ? "可揀上背、中背或下背；較難自行接觸嘅位置會清楚標示替代流程。" : "可按優先次序揀上背、中背及下背，系統會安排完整嘅按摩者動作流程。"}</Text>
+        <Text style={styles.cardText}>{massageMode === "SELF" ? "可揀肩頸、前臂手掌、背部或臀髖上緣；較難自行接觸嘅位置會清楚標示替代流程。" : "可按優先次序揀肩頸、前臂手掌、背部及臀髖上緣，系統會安排完整嘅按摩者動作流程。"}</Text>
         <BackMap side="BOTH" regions={backRegionOptions} />
       </View>
       <Pressable onPress={() => setScreen("HISTORY")} style={({ pressed }) => [styles.historyEntryCard, pressed && styles.optionCardPressed]}>
