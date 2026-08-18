@@ -49,3 +49,4 @@
 - [x] Update 3D visual-guidance documentation and handoff materials after verification.
 - [x] Fix the mobile preview path so the intended 3D body model is visibly rendered instead of only the vector fallback.
 - [x] Diagnose and restore the failed mobile preview loading state after the latest server restart.
+- [x] Replace surrounding 3D marker circles with direct, surface-conforming region highlights and taps on the mannequin.

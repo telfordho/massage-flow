@@ -53,8 +53,8 @@ The next visual layer is a stylised native 3D mannequin for iOS and Android. It 
 |---|---|
 | Rotate | A horizontal drag rotates the mannequin around its vertical axis. A compact **重設視角** control returns to the meaningful back or arm view for the current approved region. |
 | Zoom | Visible **縮小／放大** controls change a constrained camera distance for one-handed use. A two-finger pinch is a later enhancement, not part of this first foundation. |
-| Highlight | The 3D overlay receives only the approved `region + side` state. Jade indicates selected surfaces and warm terracotta indicates the current demonstration/countdown segment. |
-| Safety | Regions are displayed as surface overlays only; excluded boundaries remain unlabelled, unhighlighted and non-interactive. |
+| Highlight and selection | Approved broad regions are rendered as thin, surface-conforming patches on the mannequin itself. Jade indicates selected surfaces and warm terracotta indicates the current demonstration/countdown segment. In selection contexts, users tap the patch directly; separate floating circles or external markers are not used. |
+| Safety | Regions are displayed as low-profile surface overlays only; excluded boundaries remain unlabelled, unhighlighted and non-interactive. The highlight shell follows the existing torso or arm form closely enough to read as a part of the mannequin rather than a separate target. |
 | State continuity | Selection, preview, demonstration and countdown continue to read the same approved program data. The 3D camera cannot create or change a target. |
 
 ## Key user flows

@@ -12,36 +12,17 @@ import type { ThreeBodyGuideProps } from "./three-body-guide.types";
 const ACTIVE = "#1F4D4A";
 const EMPHASIS = "#D77A61";
 const BODY = "#EEEDE7";
-
 type Side = Exclude<BodySide, "BOTH">;
 
 function targetForRegion(targets: RegionTarget[], region: BodyRegion) {
   return targets.find((target) => target.region === region);
 }
 
-function Highlight({
-  region,
-  side,
-  position,
-  scale,
-  rotation,
-  targets,
-  activeTarget,
-  mode,
-  emphasis,
-  onToggleRegion,
-  onSelectSide,
+function SurfacePatch({
+  region, side, targets, activeTarget, mode, emphasis, onToggleRegion, onSelectSide,
 }: {
-  region: BodyRegion;
-  side: Side;
-  position: [number, number, number];
-  scale: [number, number, number];
-  rotation?: [number, number, number];
-  targets: RegionTarget[];
-  activeTarget?: RegionTarget;
-  mode: ThreeBodyGuideProps["mode"];
-  emphasis: boolean;
-  onToggleRegion?: (region: BodyRegion) => void;
+  region: BodyRegion; side: Side; targets: RegionTarget[]; activeTarget?: RegionTarget;
+  mode: ThreeBodyGuideProps["mode"]; emphasis: boolean; onToggleRegion?: (region: BodyRegion) => void;
   onSelectSide?: (side: BodySide) => void;
 }) {
   const selectedTarget = targetForRegion(targets, region);
@@ -54,59 +35,55 @@ function Highlight({
     : mode === "SIDE_SELECTION" && activeTarget?.region === region
       ? () => onSelectSide?.(side)
       : undefined;
+  const opacity = selected ? 0.9 : interactive ? 0.24 : 0.08;
 
+  if (region === "FOREARM_PALM") {
+    return (
+      <mesh position={[side === "LEFT" ? -0.95 : 0.95, 0.12, -0.05]} rotation={[0, 0, side === "LEFT" ? -0.2 : 0.2]} scale={[1.05, 0.62, 1.05]} onClick={click}>
+        <capsuleGeometry args={[0.14, 1.25, 10, 18]} />
+        <meshStandardMaterial color={color} transparent opacity={opacity} roughness={0.58} />
+      </mesh>
+    );
+  }
+
+  const thetaStart = side === "RIGHT" ? 0.12 : 1.72;
+  const phi = region === "SHOULDER_NECK" ? [0.5, 0.2]
+    : region === "UPPER_BACK" ? [0.72, 0.38]
+      : region === "MID_BACK" ? [1.12, 0.38]
+        : region === "LOWER_BACK" ? [1.52, 0.32]
+          : [1.86, 0.24];
   return (
-    <mesh position={position} scale={scale} rotation={rotation ?? [0, 0, 0]} onClick={click}>
-      <sphereGeometry args={[1, 24, 16]} />
-      <meshStandardMaterial color={color} transparent opacity={selected ? 0.9 : interactive ? 0.22 : 0.08} roughness={0.58} />
+    <mesh scale={[0.752, 1.362, 0.428]} onClick={click}>
+      <sphereGeometry args={[1, 32, 24, thetaStart, 1.3, phi[0], phi[1]]} />
+      <meshStandardMaterial color={color} transparent opacity={opacity} roughness={0.58} />
     </mesh>
   );
 }
 
 function Mannequin({
-  targets,
-  activeTarget,
-  mode,
-  emphasis,
-  rotation,
-  zoom,
-  onToggleRegion,
-  onSelectSide,
+  targets, activeTarget, mode, emphasis, rotation, zoom, onToggleRegion, onSelectSide,
 }: ThreeBodyGuideProps & { rotation: number; zoom: number }) {
   const material = useMemo(() => new THREE.MeshStandardMaterial({ color: BODY, roughness: 0.8 }), []);
   return (
     <group rotation={[0, rotation, 0]} scale={[zoom, zoom, zoom]}>
-      <mesh position={[0, 0.2, 0]} scale={[0.74, 1.35, 0.42]} material={material}>
-        <sphereGeometry args={[1, 32, 24]} />
-      </mesh>
-      <mesh position={[0, 1.78, 0]} scale={[0.38, 0.47, 0.36]} material={material}>
-        <sphereGeometry args={[1, 28, 20]} />
-      </mesh>
-      <mesh position={[-0.9, 0.56, -0.02]} rotation={[0, 0, -0.2]} material={material}>
-        <capsuleGeometry args={[0.14, 1.25, 10, 18]} />
-      </mesh>
-      <mesh position={[0.9, 0.56, -0.02]} rotation={[0, 0, 0.2]} material={material}>
-        <capsuleGeometry args={[0.14, 1.25, 10, 18]} />
-      </mesh>
-      <mesh position={[-0.31, -1.45, 0]} material={material}>
-        <capsuleGeometry args={[0.23, 1.65, 12, 20]} />
-      </mesh>
-      <mesh position={[0.31, -1.45, 0]} material={material}>
-        <capsuleGeometry args={[0.23, 1.65, 12, 20]} />
-      </mesh>
-
-      <Highlight region="SHOULDER_NECK" side="LEFT" position={[-0.42, 1.12, 0.39]} scale={[0.42, 0.16, 0.08]} targets={targets} activeTarget={activeTarget} mode={mode} emphasis={Boolean(emphasis)} onToggleRegion={onToggleRegion} onSelectSide={onSelectSide} />
-      <Highlight region="SHOULDER_NECK" side="RIGHT" position={[0.42, 1.12, 0.39]} scale={[0.42, 0.16, 0.08]} targets={targets} activeTarget={activeTarget} mode={mode} emphasis={Boolean(emphasis)} onToggleRegion={onToggleRegion} onSelectSide={onSelectSide} />
-      <Highlight region="UPPER_BACK" side="LEFT" position={[-0.38, 0.62, 0.42]} scale={[0.34, 0.42, 0.07]} targets={targets} activeTarget={activeTarget} mode={mode} emphasis={Boolean(emphasis)} onToggleRegion={onToggleRegion} onSelectSide={onSelectSide} />
-      <Highlight region="UPPER_BACK" side="RIGHT" position={[0.38, 0.62, 0.42]} scale={[0.34, 0.42, 0.07]} targets={targets} activeTarget={activeTarget} mode={mode} emphasis={Boolean(emphasis)} onToggleRegion={onToggleRegion} onSelectSide={onSelectSide} />
-      <Highlight region="MID_BACK" side="LEFT" position={[-0.36, 0.02, 0.43]} scale={[0.29, 0.38, 0.07]} targets={targets} activeTarget={activeTarget} mode={mode} emphasis={Boolean(emphasis)} onToggleRegion={onToggleRegion} onSelectSide={onSelectSide} />
-      <Highlight region="MID_BACK" side="RIGHT" position={[0.36, 0.02, 0.43]} scale={[0.29, 0.38, 0.07]} targets={targets} activeTarget={activeTarget} mode={mode} emphasis={Boolean(emphasis)} onToggleRegion={onToggleRegion} onSelectSide={onSelectSide} />
-      <Highlight region="LOWER_BACK" side="LEFT" position={[-0.34, -0.5, 0.4]} scale={[0.25, 0.28, 0.07]} targets={targets} activeTarget={activeTarget} mode={mode} emphasis={Boolean(emphasis)} onToggleRegion={onToggleRegion} onSelectSide={onSelectSide} />
-      <Highlight region="LOWER_BACK" side="RIGHT" position={[0.34, -0.5, 0.4]} scale={[0.25, 0.28, 0.07]} targets={targets} activeTarget={activeTarget} mode={mode} emphasis={Boolean(emphasis)} onToggleRegion={onToggleRegion} onSelectSide={onSelectSide} />
-      <Highlight region="UPPER_HIP" side="LEFT" position={[-0.34, -0.85, 0.38]} scale={[0.29, 0.17, 0.07]} targets={targets} activeTarget={activeTarget} mode={mode} emphasis={Boolean(emphasis)} onToggleRegion={onToggleRegion} onSelectSide={onSelectSide} />
-      <Highlight region="UPPER_HIP" side="RIGHT" position={[0.34, -0.85, 0.38]} scale={[0.29, 0.17, 0.07]} targets={targets} activeTarget={activeTarget} mode={mode} emphasis={Boolean(emphasis)} onToggleRegion={onToggleRegion} onSelectSide={onSelectSide} />
-      <Highlight region="FOREARM_PALM" side="LEFT" position={[-0.98, 0.16, -0.12]} scale={[0.14, 0.62, 0.1]} rotation={[0, 0, -0.2]} targets={targets} activeTarget={activeTarget} mode={mode} emphasis={Boolean(emphasis)} onToggleRegion={onToggleRegion} onSelectSide={onSelectSide} />
-      <Highlight region="FOREARM_PALM" side="RIGHT" position={[0.98, 0.16, -0.12]} scale={[0.14, 0.62, 0.1]} rotation={[0, 0, 0.2]} targets={targets} activeTarget={activeTarget} mode={mode} emphasis={Boolean(emphasis)} onToggleRegion={onToggleRegion} onSelectSide={onSelectSide} />
+      <mesh position={[0, 0.2, 0]} scale={[0.74, 1.35, 0.42]} material={material}><sphereGeometry args={[1, 32, 24]} /></mesh>
+      <mesh position={[0, 1.78, 0]} scale={[0.38, 0.47, 0.36]} material={material}><sphereGeometry args={[1, 28, 20]} /></mesh>
+      <mesh position={[-0.9, 0.56, -0.02]} rotation={[0, 0, -0.2]} material={material}><capsuleGeometry args={[0.14, 1.25, 10, 18]} /></mesh>
+      <mesh position={[0.9, 0.56, -0.02]} rotation={[0, 0, 0.2]} material={material}><capsuleGeometry args={[0.14, 1.25, 10, 18]} /></mesh>
+      <mesh position={[-0.31, -1.45, 0]} material={material}><capsuleGeometry args={[0.23, 1.65, 12, 20]} /></mesh>
+      <mesh position={[0.31, -1.45, 0]} material={material}><capsuleGeometry args={[0.23, 1.65, 12, 20]} /></mesh>
+      <SurfacePatch region="SHOULDER_NECK" side="LEFT" targets={targets} activeTarget={activeTarget} mode={mode} emphasis={Boolean(emphasis)} onToggleRegion={onToggleRegion} onSelectSide={onSelectSide} />
+      <SurfacePatch region="SHOULDER_NECK" side="RIGHT" targets={targets} activeTarget={activeTarget} mode={mode} emphasis={Boolean(emphasis)} onToggleRegion={onToggleRegion} onSelectSide={onSelectSide} />
+      <SurfacePatch region="UPPER_BACK" side="LEFT" targets={targets} activeTarget={activeTarget} mode={mode} emphasis={Boolean(emphasis)} onToggleRegion={onToggleRegion} onSelectSide={onSelectSide} />
+      <SurfacePatch region="UPPER_BACK" side="RIGHT" targets={targets} activeTarget={activeTarget} mode={mode} emphasis={Boolean(emphasis)} onToggleRegion={onToggleRegion} onSelectSide={onSelectSide} />
+      <SurfacePatch region="MID_BACK" side="LEFT" targets={targets} activeTarget={activeTarget} mode={mode} emphasis={Boolean(emphasis)} onToggleRegion={onToggleRegion} onSelectSide={onSelectSide} />
+      <SurfacePatch region="MID_BACK" side="RIGHT" targets={targets} activeTarget={activeTarget} mode={mode} emphasis={Boolean(emphasis)} onToggleRegion={onToggleRegion} onSelectSide={onSelectSide} />
+      <SurfacePatch region="LOWER_BACK" side="LEFT" targets={targets} activeTarget={activeTarget} mode={mode} emphasis={Boolean(emphasis)} onToggleRegion={onToggleRegion} onSelectSide={onSelectSide} />
+      <SurfacePatch region="LOWER_BACK" side="RIGHT" targets={targets} activeTarget={activeTarget} mode={mode} emphasis={Boolean(emphasis)} onToggleRegion={onToggleRegion} onSelectSide={onSelectSide} />
+      <SurfacePatch region="UPPER_HIP" side="LEFT" targets={targets} activeTarget={activeTarget} mode={mode} emphasis={Boolean(emphasis)} onToggleRegion={onToggleRegion} onSelectSide={onSelectSide} />
+      <SurfacePatch region="UPPER_HIP" side="RIGHT" targets={targets} activeTarget={activeTarget} mode={mode} emphasis={Boolean(emphasis)} onToggleRegion={onToggleRegion} onSelectSide={onSelectSide} />
+      <SurfacePatch region="FOREARM_PALM" side="LEFT" targets={targets} activeTarget={activeTarget} mode={mode} emphasis={Boolean(emphasis)} onToggleRegion={onToggleRegion} onSelectSide={onSelectSide} />
+      <SurfacePatch region="FOREARM_PALM" side="RIGHT" targets={targets} activeTarget={activeTarget} mode={mode} emphasis={Boolean(emphasis)} onToggleRegion={onToggleRegion} onSelectSide={onSelectSide} />
     </group>
   );
 }
@@ -129,7 +106,7 @@ export function ThreeBodyGuide({ mode, targets, activeTarget, emphasis = false, 
 
   const caption = mode === "GUIDANCE"
     ? `${REGION_DETAILS[regionForView].shortLabel} · ${activeTarget?.side === "LEFT" ? "左側" : activeTarget?.side === "RIGHT" ? "右側" : "雙側"}`
-    : "橫向拖動可旋轉 3D 人體；使用控制鈕可縮放或重設視角。";
+    : "直接點按模型表面的選區；橫向拖動可旋轉 3D 人體。";
 
   return (
     <View style={styles.wrap} accessible accessibilityLabel={caption}>
