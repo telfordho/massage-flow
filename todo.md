@@ -51,3 +51,4 @@
 - [x] Diagnose and restore the failed mobile preview loading state after the latest server restart.
 - [x] Replace surrounding 3D marker circles with direct, surface-conforming region highlights and taps on the mannequin.
 - [x] Fix invisible selected-state highlights for shoulder-and-neck and back regions on the 3D mannequin.
+- [x] Replace flat circular 3D highlight stickers with curved, body-conforming region surfaces for all approved torso targets.

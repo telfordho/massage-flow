@@ -46,15 +46,16 @@ function SurfacePatch({
     );
   }
 
-  const patch = region === "SHOULDER_NECK" ? [0.41, 1.12, 0.36, 0.16]
-    : region === "UPPER_BACK" ? [0.36, 0.62, 0.31, 0.42]
-      : region === "MID_BACK" ? [0.34, 0.06, 0.28, 0.38]
-        : region === "LOWER_BACK" ? [0.32, -0.48, 0.24, 0.28]
-          : [0.32, -0.84, 0.27, 0.16];
+  const phi = region === "SHOULDER_NECK" ? [0.49, 0.22]
+    : region === "UPPER_BACK" ? [0.72, 0.37]
+      : region === "MID_BACK" ? [1.1, 0.38]
+        : region === "LOWER_BACK" ? [1.49, 0.31]
+          : [1.82, 0.26];
+  const thetaStart = side === "LEFT" ? 0.58 : 1.94;
   return (
-    <mesh position={[side === "LEFT" ? -patch[0] : patch[0], patch[1], 0.431]} scale={[patch[2], patch[3], 1]} onClick={click}>
-      <circleGeometry args={[1, 32]} />
-      <meshStandardMaterial color={color} transparent opacity={opacity} roughness={0.58} />
+    <mesh position={[0, 0.2, 0]} scale={[0.748, 1.358, 0.426]} onClick={click}>
+      <sphereGeometry args={[1, 32, 24, thetaStart, 1.18, phi[0], phi[1]]} />
+      <meshStandardMaterial color={color} side={THREE.DoubleSide} transparent opacity={opacity} roughness={0.58} />
     </mesh>
   );
 }
