@@ -5,10 +5,10 @@
 | Updated | 2026-08-18 |
 | Runnable code baseline | Isolated **massage-flow-restored** Expo / React Native project |
 | Source restored from | `Massage_Flow_Prototype_Source_v1.0.zip` |
-| Latest specification package | `Massage_Flow_Spec_Package_v1.12.zip` |
-| Latest handoff package | `Massage_Flow_Handoff_Package_v2.0.zip` |
+| Latest specification package | `Massage_Flow_Spec_Package_v1.13.zip` |
+| Latest handoff package | `Massage_Flow_Handoff_Package_v2.1.zip` |
 | Product language | Cantonese Traditional Chinese for all user-facing content |
-| Current milestone | Core-flow validation plus shared interactive body-map visual guidance are complete |
+| Current milestone | Native 3D body foundation is implemented; physical-device WebGL validation is pending |
 
 > This project is a general relaxation-guidance prototype. It does not diagnose, treat, rehabilitate, or provide medical advice.
 
@@ -60,10 +60,16 @@ The prototype now uses one portrait-first interactive vector body-map component 
 
 The visual layer reads the same `region + side` data that program generation already approves. It does not create new body targets, turn excluded boundaries into tappable regions, or change self-guided substitutes. See `MVP_VISUAL_GUIDANCE_v1.12.md` for the implementation contract and scope.
 
+## Native 3D body foundation
+
+On iOS and Android, selection, laterality, preview, demonstration, and countdown now use a stylised Three.js body mannequin rendered through React Three Fiber and Expo GL. The mannequin supports horizontal-drag rotation, constrained one-handed **縮小／放大** controls, and **重設視角**. Back-surface regions open in a back view, while forearm-and-palm opens in an arm-focused front view. The existing vector map remains the web and graphics-initialization fallback.
+
+Only approved `region + side` data drives the 3D overlay. The 3D layer does not create new targets, make excluded surfaces interactive, or change self-guided substitutes. Automated mapping tests pass, but this native WebGL layer still requires physical iOS and Android validation. See `THREE_D_RENDERING_DECISION_v1.13.md` for the technical decision and test boundary.
+
 ## Verification result
 
-`pnpm check`, `pnpm test`, and `pnpm lint` pass. The active test suite contains 28 passing tests: 18 deterministic program-rule tests, 6 persistence/history tests, and 4 interactive body-map mapping tests. One existing Node module-type performance warning appears during linting but does not produce a lint error. The custom launcher icon is intentionally deferred pending user review; the current review build uses lightweight default image assets.
+`pnpm check`, `pnpm test`, and `pnpm lint` pass. The active test suite contains 31 passing tests: 18 deterministic program-rule tests, 6 persistence/history tests, 4 interactive body-map mapping tests, and 3 native 3D view/side mapping tests. One existing Node module-type performance warning appears during linting but does not produce a lint error. Native graphics rendering itself remains pending physical-device validation. The custom launcher icon is intentionally deferred pending user review; the current review build uses lightweight default image assets.
 
 ## Next recommended slice
 
-The core-flow and local-history acceptance has been confirmed. The next MVP capability should be a production 3D/animated visual layer, followed by Cantonese audio and offline content handling; cloud sync, accounts, backups, and medical features remain out of scope unless explicitly requested.
+Validate native 3D rotation, zoom controls, safe highlights, fallback behaviour, and segment continuity on physical iOS and Android devices. Once accepted, the next MVP capability is Cantonese segment audio, followed by offline content handling; cloud sync, accounts, backups, and medical features remain out of scope unless explicitly requested.

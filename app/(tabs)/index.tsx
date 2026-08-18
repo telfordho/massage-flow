@@ -12,6 +12,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { BodyMap } from "@/components/body-map";
 import { ScreenContainer } from "@/components/screen-container";
+import { ThreeBodyGuide } from "@/components/three-body-guide";
 import {
   advancePlayback,
   type BodyRegion,
@@ -562,7 +563,7 @@ export default function HomeScreen() {
       <Text style={styles.stepLabel}>步驟 1／3</Text>
       <Text style={styles.screenTitle}>想放鬆哪些部位？</Text>
       <Text style={styles.screenSubtitle}>先選概括部位，再逐一設定左右側；清單順序就是系統分配時間的優先次序。</Text>
-      <BodyMap mode="REGION_SELECTION" targets={selectedTargets} onToggleRegion={toggleRegion} />
+      <ThreeBodyGuide mode="REGION_SELECTION" targets={selectedTargets} onToggleRegion={toggleRegion} />
       <View style={styles.optionStack}>
         {regionOptions.map((region) => {
           const selected = selectedTargets.some((target) => target.region === region);
@@ -599,7 +600,7 @@ export default function HomeScreen() {
       <Text style={styles.stepLabel}>步驟 2／3 · 部位 {activeTargetIndex + 1}／{selectedTargets.length}</Text>
       <Text style={styles.screenTitle}>{REGION_DETAILS[activeTarget.region].label}想放鬆哪一邊？</Text>
       <Text style={styles.screenSubtitle}>{massageMode === "SELF" ? REGION_DETAILS[activeTarget.region].selfHint : "先確認左右側；肌群同動作會由系統喺下一步安排。"}</Text>
-      <BodyMap mode="SIDE_SELECTION" targets={selectedTargets} activeTarget={activeTarget} onSelectSide={setActiveSide} />
+      <ThreeBodyGuide mode="SIDE_SELECTION" targets={selectedTargets} activeTarget={activeTarget} onSelectSide={setActiveSide} />
       {massageMode === "SELF" && <View style={styles.reachabilityCard}><Text style={styles.reachabilityTitle}>自己按可觸及範圍</Text><Text style={styles.reachabilityText}>{REGION_DETAILS[activeTarget.region].selfHint}</Text></View>}
       <View style={styles.optionStack}>
         {sideOptions.map((option) => {
@@ -723,7 +724,7 @@ export default function HomeScreen() {
         <Pressable onPress={() => { setDemoIndex(0); setScreen("DEMO"); }} style={({ pressed }) => [styles.demoButton, pressed && styles.ghostPressed]}><Text style={styles.demoButtonText}>觀看整套示範</Text><Text style={styles.demoButtonArrow}>↗</Text></Pressable>
         {hasEdits && <Text style={styles.editAppliedNote}>已套用你嘅受控調整；總時長同必要暖身／收尾已重新驗證。</Text>}
       </View>
-      <BodyMap mode="SUMMARY" targets={program.targets} />
+      <ThreeBodyGuide mode="SUMMARY" targets={program.targets} />
       <View style={styles.timeline}>
         {program.segments.map((segment, index) => (
           <View key={segment.id} style={styles.segmentRow}>
@@ -785,7 +786,7 @@ export default function HomeScreen() {
     return (
       <ScrollView style={styles.fullPageScroll} contentContainerStyle={[styles.demoPage, { paddingBottom: bottomScrollSpace }]} showsVerticalScrollIndicator={false}>
         <View style={styles.demoTop}><Text style={styles.stepLabel}>示範 {demoIndex + 1}／{program.segments.length}</Text><GhostButton label="返回預覽" onPress={() => setScreen("PREVIEW")} /></View>
-        <View style={styles.demoVisual}><BodyMap mode="GUIDANCE" targets={[{ region: segment.region, side: segment.side }]} activeTarget={{ region: segment.region, side: segment.side }} emphasis /><View style={styles.demoNumber}><Text style={styles.demoNumberText}>{demoIndex + 1}</Text></View></View>
+        <View style={styles.demoVisual}><ThreeBodyGuide mode="GUIDANCE" targets={[{ region: segment.region, side: segment.side }]} activeTarget={{ region: segment.region, side: segment.side }} emphasis /><View style={styles.demoNumber}><Text style={styles.demoNumberText}>{demoIndex + 1}</Text></View></View>
         <Text style={styles.segmentPhase}>{phaseLabel[segment.phase]}</Text>
         <Text style={styles.demoTitle}>{segment.muscleName}</Text>
         <Text style={styles.demoLocation}>{segment.plainLocation}</Text>
@@ -807,7 +808,7 @@ export default function HomeScreen() {
       <ScrollView style={styles.fullPageScroll} contentContainerStyle={[styles.guidePage, { paddingBottom: bottomScrollSpace }]} showsVerticalScrollIndicator={false}>
         <View style={styles.guideTop}><Pressable onPress={() => { setIsRunning(false); setScreen("PREVIEW"); }} style={styles.closeButton}><Text style={styles.closeText}>×</Text></Pressable><View><Text style={styles.guideCounter}>第 {currentIndex + 1}／{program.segments.length} 段</Text><Text style={styles.guideTotal}>總餘 {formatDuration(totalRemaining)}</Text></View></View>
         <View style={styles.progressTrack}><View style={[styles.progressFill, { width: `${progress}%` }]} /></View>
-        <View style={styles.guideVisual}><BodyMap mode="GUIDANCE" targets={[{ region: currentSegment.region, side: currentSegment.side }]} activeTarget={{ region: currentSegment.region, side: currentSegment.side }} emphasis /></View>
+        <View style={styles.guideVisual}><ThreeBodyGuide mode="GUIDANCE" targets={[{ region: currentSegment.region, side: currentSegment.side }]} activeTarget={{ region: currentSegment.region, side: currentSegment.side }} emphasis /></View>
         <Text style={styles.guidePhase}>{phaseLabel[currentSegment.phase]}</Text>
         <Text style={styles.guideTitle}>{currentSegment.muscleName}</Text>
         <Text style={styles.guideLocation}>{currentSegment.plainLocation}</Text>

@@ -45,6 +45,18 @@ The first MVP visual-guidance increment uses a portrait-friendly **interactive v
 
 The first release covers the already approved shoulder-and-neck, upper/middle/lower-back, upper-hip, and forearm-and-palm surfaces. It does not turn a visual map into medical positioning, does not display excluded areas as tappable, and preserves the current approved self-guided substitutes.
 
+## Native 3D body foundation
+
+The next visual layer is a stylised native 3D mannequin for iOS and Android. It is intentionally a calm, non-anatomical body form: the product is guiding broad approved surfaces, not teaching anatomy or making medical positioning claims. The existing vector map remains the web and initialization fallback, so a missing graphics context cannot block an otherwise valid relaxation flow.
+
+| Interaction | Portrait-first behaviour |
+|---|---|
+| Rotate | A horizontal drag rotates the mannequin around its vertical axis. A compact **重設視角** control returns to the meaningful back or arm view for the current approved region. |
+| Zoom | Visible **縮小／放大** controls change a constrained camera distance for one-handed use. A two-finger pinch is a later enhancement, not part of this first foundation. |
+| Highlight | The 3D overlay receives only the approved `region + side` state. Jade indicates selected surfaces and warm terracotta indicates the current demonstration/countdown segment. |
+| Safety | Regions are displayed as surface overlays only; excluded boundaries remain unlabelled, unhighlighted and non-interactive. |
+| State continuity | Selection, preview, demonstration and countdown continue to read the same approved program data. The 3D camera cannot create or change a target. |
+
 ## Key user flows
 
 ### New guided flow

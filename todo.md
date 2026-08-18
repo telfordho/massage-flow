@@ -41,3 +41,9 @@
 - [x] Implement shared visual mapping so selection, preview, demonstration, and countdown identify the same region and side.
 - [x] Add automated regression coverage and validate the interactive visual-guidance flow on the supported mobile paths.
 - [x] Update MVP visual-guidance documentation and handoff materials after verification.
+- [x] Assess a supported Expo-compatible 3D rendering approach for portrait body guidance.
+- [x] Define rotatable, zoomable 3D body interaction states that preserve approved region, side, and safety boundaries.
+- [x] Implement the first 3D body visual foundation across selection, demonstration, and countdown.
+- [x] Add regression coverage and validate 3D mapping and safety behaviour without weakening existing safety rules.
+- [ ] Validate native 3D canvas rotation, zoom, safe highlights, fallback behaviour, and segment continuity on physical iOS and Android devices.
+- [x] Update 3D visual-guidance documentation and handoff materials after verification.
