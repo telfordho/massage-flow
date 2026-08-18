@@ -71,6 +71,8 @@
 - [x] Replace the broad-region selection page with a reference-style, touchable 2D body map while preserving existing selection and safety rules.
 - [x] Validate the 2D selection page for each approved region and side before deciding whether to replace 3D guidance elsewhere.
 - [x] Rebuild a detailed, full-body back-view outline with touchable safe-region highlights as phase one of the approved 2D selection redesign.
-- [ ] Obtain user approval of full-body proportions and highlight placement before adding selected-region label cards in phase two.
-- [ ] Rebuild the 2D selection page around the approved detailed full-body back-view reference with dynamic safe-region highlights and selected-region labels.
+- [x] Obtain user approval of full-body proportions and highlight placement before adding selected-region label cards in phase two.
+- [x] Decide not to add selected-region label cards after user review; retain the approved detailed full-body map without that second phase.
 - [x] Align the detailed 2D forearm-and-palm highlight paths within the full-body arm outline.
+- [x] Replace remaining demonstration and countdown 3D body visuals with the approved detailed full-body 2D guidance map.
+- [x] Update product status, design, handoff, and specification materials for the unified 2D guidance approach.

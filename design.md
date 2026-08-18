@@ -32,30 +32,20 @@ Massage Flow is a portrait-first, one-handed iOS-style relaxation-guidance proto
 | 完成回饋 | Non-medical subjective feedback and a return to usage-mode choice. |
 | 歷史 | Completed-session summaries, member context, duration, feedback, and a one-tap repeat action. |
 
-## Interactive body-map foundation
+## Unified detailed 2D body-map foundation
 
-The first MVP visual-guidance increment uses a portrait-friendly **interactive vector body map** rather than claiming a production 3D anatomical model. The same deterministic `region + side` input drives the selection view, the generated-program preview, the demonstration screen, and the countdown screen. This prevents the visual surface from diverging from the approved program data.
+The approved visual-guidance system uses one portrait-friendly **detailed full-body back-view 2D map**. It combines a fine anatomical outline, a restrained centre-spine guide, transparent touch targets, and safe-region highlights. The same deterministic `region + side` input drives the selection view, the generated-program preview, the demonstration screen, and the countdown screen. This prevents the visual surface from diverging from the approved program data.
 
 | Context | Interaction and visual feedback |
 |---|---|
-| Region selection | A calm body-map card shows the currently selected broad regions. Tapping a safe region selects or removes that broad region; selected surfaces use jade and inactive safe surfaces stay neutral. |
-| Laterality selection | The active broad region is displayed alone. Tapping the left or right safe surface selects that side; a compact **雙側** control retains the existing bilateral option. |
-| Preview | A non-editing visual summary shows all approved selected surfaces and their side state before the user enters the demonstration. |
+| Region selection | A calm full-body map shows the currently selected broad regions. Tapping a safe region selects or removes that broad region; selected surfaces use jade and inactive areas retain the fine neutral outline. |
+| Laterality selection | The active broad region is displayed on the same full-body map. Tapping the left or right safe surface selects that side; a compact **雙側** control retains the existing bilateral option. |
+| Preview | A non-editing full-body summary shows all approved selected surfaces and their side state before the user enters the demonstration. |
 | Demonstration and countdown | The current `Program Segment` is highlighted in a warm safety accent while the segment name, approved location and instruction remain adjacent to it. The map is informative only and never exposes a new editable body target. |
 
 The first release covers the already approved shoulder-and-neck, upper/middle/lower-back, upper-hip, and forearm-and-palm surfaces. It does not turn a visual map into medical positioning, does not display excluded areas as tappable, and preserves the current approved self-guided substitutes.
 
-## Native 3D body foundation
-
-The next visual layer is a stylised native 3D mannequin for iOS and Android. It is intentionally a calm, non-anatomical body form: the product is guiding broad approved surfaces, not teaching anatomy or making medical positioning claims. The existing vector map remains the web and initialization fallback, so a missing graphics context cannot block an otherwise valid relaxation flow.
-
-| Interaction | Portrait-first behaviour |
-|---|---|
-| Rotate | A horizontal drag rotates the mannequin around its vertical axis. A compact **重設視角** control returns to the meaningful back or arm view for the current approved region. |
-| Zoom | Visible **縮小／放大** controls change a constrained camera distance for one-handed use. A two-finger pinch is a later enhancement, not part of this first foundation. |
-| Highlight and selection | Approved broad regions are rendered as thin, surface-conforming patches on the mannequin itself. Jade indicates selected surfaces and warm terracotta indicates the current demonstration/countdown segment. In selection contexts, users tap the patch directly; separate floating circles or external markers are not used. |
-| Safety | Regions are displayed as low-profile surface overlays only; excluded boundaries remain unlabelled, unhighlighted and non-interactive. The highlight shell follows the existing torso or arm form closely enough to read as a part of the mannequin rather than a separate target. |
-| State continuity | Selection, preview, demonstration and countdown continue to read the same approved program data. The 3D camera cannot create or change a target. |
+The full-body map deliberately remains 2D throughout the active experience. This keeps the portrait flow calm and legible, avoids a visually heavy mannequin in summary and guidance contexts, and removes the need for rotation or zoom controls. The map highlights only approved broad surfaces; excluded boundaries remain unlabelled, unhighlighted, and non-interactive.
 
 ## Key user flows
 

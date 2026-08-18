@@ -5,10 +5,10 @@
 | Updated | 2026-08-18 |
 | Runnable code baseline | Isolated **massage-flow-restored** Expo / React Native project |
 | Source restored from | `Massage_Flow_Prototype_Source_v1.0.zip` |
-| Latest specification package | `Massage_Flow_Spec_Package_v1.14.zip` |
-| Latest handoff package | `Massage_Flow_Handoff_Package_v2.2.zip` |
+| Latest specification package | `Massage_Flow_Spec_Package_v1.15.zip` |
+| Latest handoff package | `Massage_Flow_Handoff_Package_v2.3.zip` |
 | Product language | Cantonese Traditional Chinese for all user-facing content |
-| Current milestone | Native 3D body foundation is implemented; physical-device WebGL validation is pending |
+| Current milestone | Detailed full-body 2D map is the approved visual guidance system across the active flow |
 
 > This project is a general relaxation-guidance prototype. It does not diagnose, treat, rehabilitate, or provide medical advice.
 
@@ -60,16 +60,16 @@ The prototype now uses one portrait-first interactive vector body-map component 
 
 The visual layer reads the same `region + side` data that program generation already approves. It does not create new body targets, turn excluded boundaries into tappable regions, or change self-guided substitutes. See `MVP_VISUAL_GUIDANCE_v1.12.md` for the implementation contract and scope.
 
-## Native 3D body foundation
+## Unified 2D visual guidance
 
-Selection, laterality, preview, demonstration, and countdown now use a stylised Three.js body mannequin. Native iOS and Android render through React Three Fiber and Expo GL; the web/mobile-preview route uses the React Three Fiber web Canvas. The mannequin supports horizontal-drag rotation, constrained one-handed **縮小／放大** controls, and **重設視角**. Back-surface regions open in a back view, while forearm-and-palm opens in an arm-focused front view. The existing vector map remains only as a WebGL-unavailable fallback.
+The approved visual system is now one detailed, portrait-first **full-body back-view 2D map** across broad-region selection, laterality, preview, demonstration, and countdown. It uses a fine anatomical outline, centre-spine guide, and selected regions that remain within the approved body boundary. Selection is directly tappable; preview is read-only; demonstration and countdown use warm emphasis for the active approved segment.
 
-Only approved `region + side` data drives the 3D overlay. The 3D layer does not create new targets, make excluded surfaces interactive, or change self-guided substitutes. Automated mapping tests pass, and the mobile web preview now renders the 3D model; native iOS and Android rendering still requires physical-device validation. See `THREE_D_RENDERING_DECISION_v1.13.md` and `WEB_3D_PREVIEW_FIX_v1.14.md` for the implementation history and test boundary.
+The map reads the same approved `region + side` data that program generation uses. It does not create new targets, turn excluded surfaces into selectable regions, or change self-guided substitutes. The formerly active 3D mannequin is no longer displayed in the product flow. See `UNIFIED_2D_GUIDANCE_v1.15.md` for the current visual contract.
 
 ## Verification result
 
-`pnpm check`, `pnpm test`, and `pnpm lint` pass. The active test suite contains 31 passing tests: 18 deterministic program-rule tests, 6 persistence/history tests, 4 interactive body-map mapping tests, and 3 native 3D view/side mapping tests. One existing Node module-type performance warning appears during linting but does not produce a lint error. Native graphics rendering itself remains pending physical-device validation. The custom launcher icon is intentionally deferred pending user review; the current review build uses lightweight default image assets.
+`pnpm check`, `pnpm test`, and `pnpm lint` pass. The active test suite contains 31 passing tests: 18 deterministic program-rule tests, 6 persistence/history tests, 4 interactive body-map mapping tests, and 3 historical 3D view/side mapping tests. One existing Node module-type performance warning appears during linting but does not produce a lint error. The custom launcher icon is intentionally deferred pending user review; the current review build uses lightweight default image assets.
 
 ## Next recommended slice
 
-Validate native 3D rotation, zoom controls, safe highlights, fallback behaviour, and segment continuity on physical iOS and Android devices. Once accepted, the next MVP capability is Cantonese segment audio, followed by offline content handling; cloud sync, accounts, backups, and medical features remain out of scope unless explicitly requested.
+Validate the detailed 2D map for each region, side, preview, demonstration, and countdown on physical iOS and Android devices. Once accepted, the next MVP capability is Cantonese segment audio, followed by offline content handling; cloud sync, accounts, backups, and medical features remain out of scope unless explicitly requested.
