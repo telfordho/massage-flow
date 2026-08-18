@@ -38,8 +38,8 @@ function SurfacePatch({
 
   if (region === "FOREARM_PALM") {
     return (
-      <mesh renderOrder={2} position={[side === "LEFT" ? -0.9 : 0.9, 0.56, -0.02]} rotation={[0, 0, side === "LEFT" ? -0.2 : 0.2]} scale={[1.05, 1.05, 1.05]} onClick={click}>
-        <capsuleGeometry args={[0.14, 1.25, 10, 18]} />
+      <mesh renderOrder={2} position={[side === "LEFT" ? -0.82 : 0.82, 0.02, -0.02]} rotation={[0, 0, side === "LEFT" ? -0.2 : 0.2]} scale={[1.05, 1.05, 1.05]} onClick={click}>
+        <capsuleGeometry args={[0.14, 0.56, 10, 18]} />
         <meshStandardMaterial color={color} depthWrite={false} transparent opacity={opacity} roughness={0.58} />
       </mesh>
     );
