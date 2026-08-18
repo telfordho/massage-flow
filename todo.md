@@ -67,3 +67,6 @@
 - [x] Move forearm highlights away from the red-arrow upper excess and into the blue-marked wrist-side gaps on both arms.
 - [x] Replace the remaining gapped forearm overlay with a continuous elbow-to-fist surface highlight on both arms.
 - [x] Fix independent left, right, and bilateral 3D forearm-and-palm highlighting to match the selected side exactly.
+- [x] Create a review-only upgraded 2D body-summary card mockup before any production integration.
+- [x] Replace the broad-region selection page with a reference-style, touchable 2D body map while preserving existing selection and safety rules.
+- [x] Validate the 2D selection page for each approved region and side before deciding whether to replace 3D guidance elsewhere.

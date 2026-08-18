@@ -18,7 +18,7 @@ type BodyMapProps = {
 
 const ACTIVE = "#1F4D4A";
 const EMPHASIS = "#D77A61";
-const IDLE = "#DCE9E3";
+const IDLE_SURFACE = "#EDF3EF";
 const OUTLINE = "#AAB8B1";
 
 function selectedTargetFor(targets: RegionTarget[], region: BodyRegion) {
@@ -59,8 +59,8 @@ function MapZone({
   return (
     <Path
       d={d}
-      fill={selected ? (emphasis ? EMPHASIS : ACTIVE) : IDLE}
-      opacity={selected ? 0.96 : 0.48}
+      fill={selected ? (emphasis ? EMPHASIS : ACTIVE) : IDLE_SURFACE}
+      opacity={selected ? 0.96 : 0.86}
       onPress={onPress}
       accessible={interactive}
       accessibilityLabel={interactive ? `${REGION_DETAILS[region].label}${side === "LEFT" ? "左側" : "右側"}` : undefined}
@@ -69,9 +69,9 @@ function MapZone({
 }
 
 function BackSurface({ props }: { props: BodyMapProps }) {
-  const { targets, activeTarget, mode, emphasis = false, onToggleRegion, onSelectSide } = props;
-  return (
-    <Svg width={214} height={266} viewBox="0 0 206 250">
+const { targets, activeTarget, mode, emphasis = false, onToggleRegion, onSelectSide } = props;
+return (
+    <Svg width={246} height={322} viewBox="0 0 206 250">
       <Path
         d="M82 20 C66 22 62 42 64 60 L45 76 C35 84 38 106 50 110 L63 108 L69 201 C70 220 83 232 103 232 C123 232 136 220 137 201 L143 108 L156 110 C168 106 171 84 161 76 L142 60 C144 42 140 22 124 20 C116 13 90 13 82 20 Z"
         fill="#EEEDE7"
@@ -95,9 +95,9 @@ function BackSurface({ props }: { props: BodyMapProps }) {
 }
 
 function ArmSurface({ props }: { props: BodyMapProps }) {
-  const { targets, activeTarget, mode, emphasis = false, onToggleRegion, onSelectSide } = props;
-  return (
-    <Svg width={214} height={266} viewBox="0 0 206 250">
+const { targets, activeTarget, mode, emphasis = false, onToggleRegion, onSelectSide } = props;
+return (
+    <Svg width={246} height={322} viewBox="0 0 206 250">
       <Path d="M55 30 C43 44 42 67 49 84 L67 143 L84 138 L73 74 C70 56 68 40 55 30 Z" fill="#EEEDE7" stroke={OUTLINE} strokeWidth={2} />
       <Path d="M151 30 C163 44 164 67 157 84 L139 143 L122 138 L133 74 C136 56 138 40 151 30 Z" fill="#EEEDE7" stroke={OUTLINE} strokeWidth={2} />
       <Path d="M67 143 C59 157 61 180 72 195 L81 216 C86 226 99 226 101 215 L98 179 L84 138 Z" fill="#EEEDE7" stroke={OUTLINE} strokeWidth={2} />
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
   surfaceButtonPressed: { opacity: 0.76 },
   surfaceButtonText: { color: "#486058", fontSize: 13, fontWeight: "700" },
   surfaceButtonTextSelected: { color: "#FFFFFF" },
-  mapFrame: { width: "100%", minHeight: 266, alignItems: "center", justifyContent: "center", backgroundColor: "#F8FAF8", borderRadius: 20, borderWidth: 1, borderColor: "#E0E7E2" },
+  mapFrame: { width: "100%", minHeight: 342, alignItems: "center", justifyContent: "center", backgroundColor: "#FCFCF8", borderRadius: 26, borderWidth: 1, borderColor: "#DFE7E1" },
   captionRow: { flexDirection: "row", alignItems: "center", gap: 7, justifyContent: "center", paddingHorizontal: 12 },
   captionDot: { width: 8, height: 8, borderRadius: 4, backgroundColor: ACTIVE },
   captionDotEmphasis: { backgroundColor: EMPHASIS },

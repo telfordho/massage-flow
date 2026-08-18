@@ -560,7 +560,7 @@ export default function HomeScreen() {
       <Text style={styles.stepLabel}>步驟 1／3</Text>
       <Text style={styles.screenTitle}>想放鬆哪些部位？</Text>
       <Text style={styles.screenSubtitle}>先選概括部位，再逐一設定左右側；清單順序就是系統分配時間的優先次序。</Text>
-      <ThreeBodyGuide mode="REGION_SELECTION" targets={selectedTargets} onToggleRegion={toggleRegion} />
+      <BodyMap mode="REGION_SELECTION" targets={selectedTargets} onToggleRegion={toggleRegion} />
       <View style={styles.optionStack}>
         {regionOptions.map((region) => {
           const selected = selectedTargets.some((target) => target.region === region);
@@ -597,7 +597,7 @@ export default function HomeScreen() {
       <Text style={styles.stepLabel}>步驟 2／3 · 部位 {activeTargetIndex + 1}／{selectedTargets.length}</Text>
       <Text style={styles.screenTitle}>{REGION_DETAILS[activeTarget.region].label}想放鬆哪一邊？</Text>
       <Text style={styles.screenSubtitle}>{massageMode === "SELF" ? REGION_DETAILS[activeTarget.region].selfHint : "先確認左右側；肌群同動作會由系統喺下一步安排。"}</Text>
-      <ThreeBodyGuide mode="SIDE_SELECTION" targets={selectedTargets} activeTarget={activeTarget} onSelectSide={setActiveSide} />
+      <BodyMap mode="SIDE_SELECTION" targets={selectedTargets} activeTarget={activeTarget} onSelectSide={setActiveSide} />
       {massageMode === "SELF" && <View style={styles.reachabilityCard}><Text style={styles.reachabilityTitle}>自己按可觸及範圍</Text><Text style={styles.reachabilityText}>{REGION_DETAILS[activeTarget.region].selfHint}</Text></View>}
       <View style={styles.optionStack}>
         {sideOptions.map((option) => {
