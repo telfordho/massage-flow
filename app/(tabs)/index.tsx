@@ -272,6 +272,7 @@ export default function HomeScreen() {
       beginFreshSelection();
       return;
     }
+    beginFreshSelection();
     if (selectedMemberId === "self" && helperMembers[0]) setSelectedMemberId(helperMembers[0].id);
   };
 
@@ -336,6 +337,7 @@ export default function HomeScreen() {
       setScreen("HOME");
       return;
     }
+    beginFreshSelection();
     if (selectedMemberId === "self" && helperMembers[0]) setSelectedMemberId(helperMembers[0].id);
     setScreen("MEMBER");
   };

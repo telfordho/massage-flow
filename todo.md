@@ -58,3 +58,4 @@
 - [x] Separate neutral upper-arm geometry from elbow-to-wrist forearm selection so the outer shoulder and upper arm remain visible when unselected.
 - [x] Reconnect the neutral shoulder-to-upper-arm meshes and align forearm highlights to eliminate misplaced elbow-area blocks.
 - [x] Fix self-guided entry so no stale target is highlighted before selection, and extend selected forearm highlights across the full elbow-to-wrist span.
+- [x] Make assisted new sessions start with an empty neutral selection while preserving saved targets exclusively for explicit history replay.
