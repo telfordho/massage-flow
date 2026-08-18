@@ -125,7 +125,7 @@ export default function HomeScreen() {
   const [editingMemberId, setEditingMemberId] = useState<string | null>(null);
   const [memberNameDraft, setMemberNameDraft] = useState("");
   const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
-  const [selectedTargets, setSelectedTargets] = useState<RegionTarget[]>([{ region: "UPPER_BACK", side: "BOTH" }]);
+  const [selectedTargets, setSelectedTargets] = useState<RegionTarget[]>([]);
   const [activeTargetIndex, setActiveTargetIndex] = useState(0);
   const [sessionContext, setSessionContext] = useState<SessionContext>(DEFAULT_SESSION_CONTEXT);
   const [editIntent, setEditIntent] = useState<ProgramEditIntent>({});
@@ -173,13 +173,9 @@ export default function HomeScreen() {
     void saveMassageFlowData({ version: 1, members, preferencesByMember, history });
   }, [history, isStorageReady, members, preferencesByMember]);
 
-  const applySavedPreferences = (memberId: string) => {
-    const saved = preferencesByMember[memberId];
-    if (!saved) return;
-    setSelectedTargets(saved.targets.map((target) => ({ ...target })));
+  const beginFreshSelection = () => {
+    setSelectedTargets([]);
     setActiveTargetIndex(0);
-    setDurationMinutes(saved.durationMinutes);
-    setSessionContext({ ...saved.context });
     setEditIntent({});
   };
 
@@ -257,7 +253,7 @@ export default function HomeScreen() {
   };
 
   const resetPrototype = () => {
-    setSelectedTargets([{ region: "UPPER_BACK", side: "BOTH" }]);
+    setSelectedTargets([]);
     setActiveTargetIndex(0);
     setSessionContext(DEFAULT_SESSION_CONTEXT);
     setEditIntent({});
@@ -273,7 +269,7 @@ export default function HomeScreen() {
     setMassageMode(mode);
     if (mode === "SELF") {
       setSelectedMemberId("self");
-      applySavedPreferences("self");
+      beginFreshSelection();
       return;
     }
     if (selectedMemberId === "self" && helperMembers[0]) setSelectedMemberId(helperMembers[0].id);
@@ -283,9 +279,8 @@ export default function HomeScreen() {
     setSelectedTargets((current) => {
       const index = current.findIndex((target) => target.region === region);
       if (index >= 0) {
-        if (current.length === 1) return current;
         const next = current.filter((target) => target.region !== region);
-        setActiveTargetIndex((active) => Math.min(active, next.length - 1));
+        setActiveTargetIndex((active) => Math.max(0, Math.min(active, next.length - 1)));
         return next;
       }
       return [...current, { region, side: "BOTH" }];
@@ -337,7 +332,7 @@ export default function HomeScreen() {
   const continueFromMode = () => {
     if (massageMode === "SELF") {
       setSelectedMemberId("self");
-      applySavedPreferences("self");
+      beginFreshSelection();
       setScreen("HOME");
       return;
     }
@@ -591,7 +586,7 @@ export default function HomeScreen() {
           </View>
         ))}
       </View>
-      <View style={styles.bottomActions}><GhostButton label="返回" onPress={() => setScreen("HOME")} /><PrimaryButton label="確認左右側" onPress={() => { setActiveTargetIndex(0); setScreen("SELECT"); }} /></View>
+      <View style={styles.bottomActions}><GhostButton label="返回" onPress={() => setScreen("HOME")} /><PrimaryButton disabled={selectedTargets.length === 0} label="確認左右側" onPress={() => { setActiveTargetIndex(0); setScreen("SELECT"); }} /></View>
     </ScrollView>
   );
 

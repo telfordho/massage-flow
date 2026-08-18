@@ -57,3 +57,4 @@
 - [x] Fix forearm overlay depth so neutral arms remain visible and selected forearms stay highlighted across mannequin rotations.
 - [x] Separate neutral upper-arm geometry from elbow-to-wrist forearm selection so the outer shoulder and upper arm remain visible when unselected.
 - [x] Reconnect the neutral shoulder-to-upper-arm meshes and align forearm highlights to eliminate misplaced elbow-area blocks.
+- [x] Fix self-guided entry so no stale target is highlighted before selection, and extend selected forearm highlights across the full elbow-to-wrist span.
