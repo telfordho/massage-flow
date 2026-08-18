@@ -39,7 +39,7 @@ function SurfacePatch({
 
   if (region === "FOREARM_PALM") {
     return (
-      <mesh position={[side === "LEFT" ? -0.95 : 0.95, 0.12, -0.05]} rotation={[0, 0, side === "LEFT" ? -0.2 : 0.2]} scale={[1.05, 0.62, 1.05]} onClick={click}>
+      <mesh position={[side === "LEFT" ? -0.9 : 0.9, 0.56, -0.02]} rotation={[0, 0, side === "LEFT" ? -0.2 : 0.2]} scale={[1.05, 1.05, 1.05]} onClick={click}>
         <capsuleGeometry args={[0.14, 1.25, 10, 18]} />
         <meshStandardMaterial color={color} transparent opacity={opacity} roughness={0.58} />
       </mesh>
@@ -53,10 +53,18 @@ function SurfacePatch({
           : [1.82, 0.26];
   const thetaStart = side === "LEFT" ? 0.58 : 1.94;
   return (
-    <mesh position={[0, 0.2, 0]} scale={[0.748, 1.358, 0.426]} onClick={click}>
-      <sphereGeometry args={[1, 32, 24, thetaStart, 1.18, phi[0], phi[1]]} />
-      <meshStandardMaterial color={color} side={THREE.DoubleSide} transparent opacity={opacity} roughness={0.58} />
-    </mesh>
+    <>
+      <mesh position={[0, 0.2, 0]} scale={[0.748, 1.358, 0.426]} onClick={click}>
+        <sphereGeometry args={[1, 32, 24, thetaStart, 1.18, phi[0], phi[1]]} />
+        <meshStandardMaterial color={color} side={THREE.DoubleSide} transparent opacity={opacity} roughness={0.58} />
+      </mesh>
+      {region === "SHOULDER_NECK" ? (
+        <mesh position={[side === "LEFT" ? -0.7 : 0.7, 1.2, -0.02]} rotation={[0, 0, side === "LEFT" ? -0.46 : 0.46]} onClick={click}>
+          <capsuleGeometry args={[0.16, 0.36, 10, 18]} />
+          <meshStandardMaterial color={color} transparent opacity={opacity} roughness={0.58} />
+        </mesh>
+      ) : null}
+    </>
   );
 }
 
