@@ -32,3 +32,4 @@
 - [x] Confirm restored Markdown documentation is present and non-empty; guide Code-panel refresh without changing the selected functional baseline.
 - [x] Create a complete copy-ready new-chat handoff procedure for the current rolled-back version.
 - [x] Restore handoff documents, v1.10 specification ZIP, and reference materials to both workspace and shared project files.
+- [x] Restore stable preview startup for the rolled-back project before physical-device validation.
