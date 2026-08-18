@@ -5,10 +5,10 @@
 | Updated | 2026-08-18 |
 | Runnable code baseline | Isolated **massage-flow-restored** Expo / React Native project |
 | Source restored from | `Massage_Flow_Prototype_Source_v1.0.zip` |
-| Latest specification package | `Massage_Flow_Spec_Package_v1.11.zip` |
-| Latest handoff package | `Massage_Flow_Handoff_Package_v1.9.zip` |
+| Latest specification package | `Massage_Flow_Spec_Package_v1.12.zip` |
+| Latest handoff package | `Massage_Flow_Handoff_Package_v2.0.zip` |
 | Product language | Cantonese Traditional Chinese for all user-facing content |
-| Current milestone | Source restoration, local persistence/history, safe replay, shoulder-and-neck, forearm-and-palm, and upper-hip expansions are complete |
+| Current milestone | Core-flow validation plus shared interactive body-map visual guidance are complete |
 
 > This project is a general relaxation-guidance prototype. It does not diagnose, treat, rehabilitate, or provide medical advice.
 
@@ -54,10 +54,16 @@ Program Preview now includes **「返回時長」**, so the user can revise dura
 
 The flow remains on the upper-hip and outer-hip surface only. It explicitly avoids the gluteal cleft, tailbone, groin, and centre of the pelvis. In self-guided mode, the first step is over clothing and the harder-to-control range is replaced by an approved outer-hip substitute. See `UPPER_HIP_EXPANSION_v1.11.md` for the full boundary.
 
+## Interactive visual-guidance foundation
+
+The prototype now uses one portrait-first interactive vector body-map component across broad-region selection, laterality selection, preview, demonstration, and countdown. Tapping a displayed safe surface selects the corresponding approved broad region or left/right side; **雙側** remains an explicit existing control. The preview is a read-only visual summary, while demonstration and countdown use a warm highlight for the current approved `Program Segment`.
+
+The visual layer reads the same `region + side` data that program generation already approves. It does not create new body targets, turn excluded boundaries into tappable regions, or change self-guided substitutes. See `MVP_VISUAL_GUIDANCE_v1.12.md` for the implementation contract and scope.
+
 ## Verification result
 
-`pnpm check`, `pnpm test`, and `pnpm lint` pass. The active test suite contains 24 passing tests: 18 deterministic program-rule tests, including shoulder-and-neck, forearm-and-palm, and upper-hip boundary coverage plus duration-adjustment regressions, and 6 persistence/history tests. One existing Node module-type performance warning appears during linting but does not produce a lint error. The custom launcher icon is intentionally deferred pending user review; the current review build uses lightweight default image assets.
+`pnpm check`, `pnpm test`, and `pnpm lint` pass. The active test suite contains 28 passing tests: 18 deterministic program-rule tests, 6 persistence/history tests, and 4 interactive body-map mapping tests. One existing Node module-type performance warning appears during linting but does not produce a lint error. The custom launcher icon is intentionally deferred pending user review; the current review build uses lightweight default image assets.
 
 ## Next recommended slice
 
-Validate the newly restored local-history experience on physical iOS and Android devices before expanding to new broad body regions. Cloud sync, accounts, backups, and medical features remain out of scope unless explicitly requested.
+The core-flow and local-history acceptance has been confirmed. The next MVP capability should be a production 3D/animated visual layer, followed by Cantonese audio and offline content handling; cloud sync, accounts, backups, and medical features remain out of scope unless explicitly requested.

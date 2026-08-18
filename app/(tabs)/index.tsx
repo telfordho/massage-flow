@@ -8,9 +8,9 @@ import {
   TextInput,
   View,
 } from "react-native";
-import Svg, { Circle, Path } from "react-native-svg";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { BodyMap } from "@/components/body-map";
 import { ScreenContainer } from "@/components/screen-container";
 import {
   advancePlayback,
@@ -54,7 +54,6 @@ const sideOptions: { value: BodySide; label: string; helper: string }[] = [
   { value: "BOTH", label: "雙側", helper: "左右平均安排" },
   { value: "RIGHT", label: "右側", helper: "集中處理右邊位置" },
 ];
-const backRegionOptions: BodyRegion[] = ["SHOULDER_NECK", "UPPER_BACK", "MID_BACK", "LOWER_BACK", "UPPER_HIP"];
 const regionOptions: BodyRegion[] = ["SHOULDER_NECK", "FOREARM_PALM", "UPPER_BACK", "MID_BACK", "LOWER_BACK", "UPPER_HIP"];
 const sensationOptions: { value: Sensation; label: string }[] = [
   { value: "TIGHT", label: "繃緊" },
@@ -86,92 +85,6 @@ function formatHistoryDate(value: string) {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return "剛剛完成";
   return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日 ${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}`;
-}
-
-function ForearmPalmMap({ side, emphasis = false }: { side: BodySide; emphasis?: boolean }) {
-  const showLeft = side === "LEFT" || side === "BOTH";
-  const showRight = side === "RIGHT" || side === "BOTH";
-  const activeColor = emphasis ? "#D77A61" : "#1F4D4A";
-  const leftFill = showLeft ? activeColor : "#DCE9E3";
-  const rightFill = showRight ? activeColor : "#DCE9E3";
-  const leftOpacity = showLeft ? 0.96 : 0.55;
-  const rightOpacity = showRight ? 0.96 : 0.55;
-
-  return (
-    <View style={styles.bodyMapWrap} accessible accessibilityLabel="前臂與手掌位置示意圖">
-      <Svg width={206} height={250} viewBox="0 0 206 250">
-        <Path d="M55 30 C43 44 42 67 49 84 L67 143 L84 138 L73 74 C70 56 68 40 55 30 Z" fill="#EEEDE7" stroke="#AAB8B1" strokeWidth={2} />
-        <Path d="M151 30 C163 44 164 67 157 84 L139 143 L122 138 L133 74 C136 56 138 40 151 30 Z" fill="#EEEDE7" stroke="#AAB8B1" strokeWidth={2} />
-        <Path d="M67 143 C59 157 61 180 72 195 L81 216 C86 226 99 226 101 215 L98 179 L84 138 Z" fill="#EEEDE7" stroke="#AAB8B1" strokeWidth={2} />
-        <Path d="M139 143 C147 157 145 180 134 195 L125 216 C120 226 107 226 105 215 L108 179 L122 138 Z" fill="#EEEDE7" stroke="#AAB8B1" strokeWidth={2} />
-        <Path d="M53 41 C48 55 50 71 55 84 L71 137 L82 133 L71 72 C69 57 65 45 53 41 Z" fill={leftFill} opacity={leftOpacity} />
-        <Path d="M153 41 C158 55 156 71 151 84 L135 137 L124 133 L135 72 C137 57 141 45 153 41 Z" fill={rightFill} opacity={rightOpacity} />
-        <Path d="M71 147 C66 161 69 178 77 190 L84 208 C87 214 93 214 94 208 L91 179 L82 141 Z" fill={leftFill} opacity={leftOpacity} />
-        <Path d="M135 147 C140 161 137 178 129 190 L122 208 C119 214 113 214 112 208 L115 179 L124 141 Z" fill={rightFill} opacity={rightOpacity} />
-      </Svg>
-      <View style={styles.mapCaption}>
-        <View style={styles.mapDot} />
-        <Text style={styles.mapCaptionText}>前臂與手掌 · 概括選區</Text>
-      </View>
-    </View>
-  );
-}
-
-function BackMap({ side, regions = ["UPPER_BACK"], emphasis = false }: { side: BodySide; regions?: BodyRegion[]; emphasis?: boolean }) {
-  if (regions.includes("FOREARM_PALM")) return <ForearmPalmMap side={side} emphasis={emphasis} />;
-  const showLeft = side === "LEFT" || side === "BOTH";
-  const showRight = side === "RIGHT" || side === "BOTH";
-  const shoulderNeck = regions.includes("SHOULDER_NECK");
-  const upper = regions.includes("UPPER_BACK");
-  const middle = regions.includes("MID_BACK");
-  const lower = regions.includes("LOWER_BACK");
-  const upperHip = regions.includes("UPPER_HIP");
-  const activeColor = emphasis ? "#D77A61" : "#1F4D4A";
-
-  return (
-    <View style={styles.bodyMapWrap} accessible accessibilityLabel="肩頸及背部位置示意圖">
-      <Svg width={206} height={250} viewBox="0 0 206 250">
-        <Path
-          d="M82 20 C66 22 62 42 64 60 L45 76 C35 84 38 106 50 110 L63 108 L69 201 C70 220 83 232 103 232 C123 232 136 220 137 201 L143 108 L156 110 C168 106 171 84 161 76 L142 60 C144 42 140 22 124 20 C116 13 90 13 82 20 Z"
-          fill="#EEEDE7"
-          stroke="#AAB8B1"
-          strokeWidth={2}
-        />
-        <Circle cx={103} cy={30} r={18} fill="#EEEDE7" stroke="#AAB8B1" strokeWidth={2} />
-        <Path d="M103 56 L103 192" stroke="#C4CEC8" strokeWidth={2} strokeDasharray="4 5" />
-        <Path
-          d="M82 51 C75 54 71 61 69 69 L82 74 C85 66 90 61 97 58 Z"
-          fill={shoulderNeck && showLeft ? activeColor : "#DCE9E3"}
-          opacity={shoulderNeck && showLeft ? 0.96 : 0.55}
-        />
-        <Path
-          d="M124 51 C131 54 135 61 137 69 L124 74 C121 66 116 61 109 58 Z"
-          fill={shoulderNeck && showRight ? activeColor : "#DCE9E3"}
-          opacity={shoulderNeck && showRight ? 0.96 : 0.55}
-        />
-        <Path
-          d="M67 72 C78 64 93 68 100 82 L94 108 C82 101 71 96 61 91 Z"
-          fill={upper && showLeft ? activeColor : "#DCE9E3"}
-          opacity={upper && showLeft ? 0.96 : 0.55}
-        />
-        <Path
-          d="M139 72 C128 64 113 68 106 82 L112 108 C124 101 135 96 145 91 Z"
-          fill={upper && showRight ? activeColor : "#DCE9E3"}
-          opacity={upper && showRight ? 0.96 : 0.55}
-        />
-        <Path d="M71 112 C82 104 92 109 98 119 L96 148 L76 143 Z" fill={middle && showLeft ? activeColor : "#DCE9E3"} opacity={middle && showLeft ? 0.96 : 0.55} />
-        <Path d="M135 112 C124 104 114 109 108 119 L110 148 L130 143 Z" fill={middle && showRight ? activeColor : "#DCE9E3"} opacity={middle && showRight ? 0.96 : 0.55} />
-        <Path d="M77 151 L96 154 L96 183 L80 180 Z" fill={lower && showLeft ? activeColor : "#DCE9E3"} opacity={lower && showLeft ? 0.96 : 0.55} />
-        <Path d="M129 151 L110 154 L110 183 L126 180 Z" fill={lower && showRight ? activeColor : "#DCE9E3"} opacity={lower && showRight ? 0.96 : 0.55} />
-        <Path d="M79 184 C85 180 92 181 96 188 L95 205 L80 201 Z" fill={upperHip && showLeft ? activeColor : "#DCE9E3"} opacity={upperHip && showLeft ? 0.96 : 0.55} />
-        <Path d="M127 184 C121 180 114 181 110 188 L111 205 L126 201 Z" fill={upperHip && showRight ? activeColor : "#DCE9E3"} opacity={upperHip && showRight ? 0.96 : 0.55} />
-      </Svg>
-      <View style={styles.mapCaption}>
-        <View style={styles.mapDot} />
-        <Text style={styles.mapCaptionText}>{regions.map((region) => REGION_DETAILS[region].shortLabel).join(" · ")} · 概括選區</Text>
-      </View>
-    </View>
-  );
 }
 
 function PrimaryButton({ label, onPress, disabled = false }: { label: string; onPress: () => void; disabled?: boolean }) {
@@ -625,7 +538,7 @@ export default function HomeScreen() {
         <Text style={styles.cardKicker}>本機家庭成員 · {selectedMember.label}</Text>
         <Text style={styles.cardTitle}>由部位開始安排</Text>
         <Text style={styles.cardText}>{massageMode === "SELF" ? "可揀肩頸、前臂手掌、背部或臀髖上緣；較難自行接觸嘅位置會清楚標示替代流程。" : "可按優先次序揀肩頸、前臂手掌、背部及臀髖上緣，系統會安排完整嘅按摩者動作流程。"}</Text>
-        <BackMap side="BOTH" regions={backRegionOptions} />
+        <BodyMap mode="SUMMARY" targets={selectedTargets} />
       </View>
       <Pressable onPress={() => setScreen("HISTORY")} style={({ pressed }) => [styles.historyEntryCard, pressed && styles.optionCardPressed]}>
         <View style={styles.historyEntryIcon}><Text style={styles.historyEntryIconText}>↺</Text></View>
@@ -649,7 +562,7 @@ export default function HomeScreen() {
       <Text style={styles.stepLabel}>步驟 1／3</Text>
       <Text style={styles.screenTitle}>想放鬆哪些部位？</Text>
       <Text style={styles.screenSubtitle}>先選概括部位，再逐一設定左右側；清單順序就是系統分配時間的優先次序。</Text>
-      <BackMap side="BOTH" regions={selectedTargets.map((target) => target.region)} />
+      <BodyMap mode="REGION_SELECTION" targets={selectedTargets} onToggleRegion={toggleRegion} />
       <View style={styles.optionStack}>
         {regionOptions.map((region) => {
           const selected = selectedTargets.some((target) => target.region === region);
@@ -686,7 +599,7 @@ export default function HomeScreen() {
       <Text style={styles.stepLabel}>步驟 2／3 · 部位 {activeTargetIndex + 1}／{selectedTargets.length}</Text>
       <Text style={styles.screenTitle}>{REGION_DETAILS[activeTarget.region].label}想放鬆哪一邊？</Text>
       <Text style={styles.screenSubtitle}>{massageMode === "SELF" ? REGION_DETAILS[activeTarget.region].selfHint : "先確認左右側；肌群同動作會由系統喺下一步安排。"}</Text>
-      <BackMap side={activeTarget.side} regions={[activeTarget.region]} />
+      <BodyMap mode="SIDE_SELECTION" targets={selectedTargets} activeTarget={activeTarget} onSelectSide={setActiveSide} />
       {massageMode === "SELF" && <View style={styles.reachabilityCard}><Text style={styles.reachabilityTitle}>自己按可觸及範圍</Text><Text style={styles.reachabilityText}>{REGION_DETAILS[activeTarget.region].selfHint}</Text></View>}
       <View style={styles.optionStack}>
         {sideOptions.map((option) => {
@@ -810,6 +723,7 @@ export default function HomeScreen() {
         <Pressable onPress={() => { setDemoIndex(0); setScreen("DEMO"); }} style={({ pressed }) => [styles.demoButton, pressed && styles.ghostPressed]}><Text style={styles.demoButtonText}>觀看整套示範</Text><Text style={styles.demoButtonArrow}>↗</Text></Pressable>
         {hasEdits && <Text style={styles.editAppliedNote}>已套用你嘅受控調整；總時長同必要暖身／收尾已重新驗證。</Text>}
       </View>
+      <BodyMap mode="SUMMARY" targets={program.targets} />
       <View style={styles.timeline}>
         {program.segments.map((segment, index) => (
           <View key={segment.id} style={styles.segmentRow}>
@@ -871,7 +785,7 @@ export default function HomeScreen() {
     return (
       <ScrollView style={styles.fullPageScroll} contentContainerStyle={[styles.demoPage, { paddingBottom: bottomScrollSpace }]} showsVerticalScrollIndicator={false}>
         <View style={styles.demoTop}><Text style={styles.stepLabel}>示範 {demoIndex + 1}／{program.segments.length}</Text><GhostButton label="返回預覽" onPress={() => setScreen("PREVIEW")} /></View>
-        <View style={styles.demoVisual}><BackMap side={segment.side} regions={[segment.region]} emphasis /><View style={styles.demoNumber}><Text style={styles.demoNumberText}>{demoIndex + 1}</Text></View></View>
+        <View style={styles.demoVisual}><BodyMap mode="GUIDANCE" targets={[{ region: segment.region, side: segment.side }]} activeTarget={{ region: segment.region, side: segment.side }} emphasis /><View style={styles.demoNumber}><Text style={styles.demoNumberText}>{demoIndex + 1}</Text></View></View>
         <Text style={styles.segmentPhase}>{phaseLabel[segment.phase]}</Text>
         <Text style={styles.demoTitle}>{segment.muscleName}</Text>
         <Text style={styles.demoLocation}>{segment.plainLocation}</Text>
@@ -893,7 +807,7 @@ export default function HomeScreen() {
       <ScrollView style={styles.fullPageScroll} contentContainerStyle={[styles.guidePage, { paddingBottom: bottomScrollSpace }]} showsVerticalScrollIndicator={false}>
         <View style={styles.guideTop}><Pressable onPress={() => { setIsRunning(false); setScreen("PREVIEW"); }} style={styles.closeButton}><Text style={styles.closeText}>×</Text></Pressable><View><Text style={styles.guideCounter}>第 {currentIndex + 1}／{program.segments.length} 段</Text><Text style={styles.guideTotal}>總餘 {formatDuration(totalRemaining)}</Text></View></View>
         <View style={styles.progressTrack}><View style={[styles.progressFill, { width: `${progress}%` }]} /></View>
-        <View style={styles.guideVisual}><BackMap side={currentSegment.side} regions={[currentSegment.region]} emphasis /></View>
+        <View style={styles.guideVisual}><BodyMap mode="GUIDANCE" targets={[{ region: currentSegment.region, side: currentSegment.side }]} activeTarget={{ region: currentSegment.region, side: currentSegment.side }} emphasis /></View>
         <Text style={styles.guidePhase}>{phaseLabel[currentSegment.phase]}</Text>
         <Text style={styles.guideTitle}>{currentSegment.muscleName}</Text>
         <Text style={styles.guideLocation}>{currentSegment.plainLocation}</Text>

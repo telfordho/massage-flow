@@ -32,6 +32,19 @@ Massage Flow is a portrait-first, one-handed iOS-style relaxation-guidance proto
 | 完成回饋 | Non-medical subjective feedback and a return to usage-mode choice. |
 | 歷史 | Completed-session summaries, member context, duration, feedback, and a one-tap repeat action. |
 
+## Interactive body-map foundation
+
+The first MVP visual-guidance increment uses a portrait-friendly **interactive vector body map** rather than claiming a production 3D anatomical model. The same deterministic `region + side` input drives the selection view, the generated-program preview, the demonstration screen, and the countdown screen. This prevents the visual surface from diverging from the approved program data.
+
+| Context | Interaction and visual feedback |
+|---|---|
+| Region selection | A calm body-map card shows the currently selected broad regions. Tapping a safe region selects or removes that broad region; selected surfaces use jade and inactive safe surfaces stay neutral. |
+| Laterality selection | The active broad region is displayed alone. Tapping the left or right safe surface selects that side; a compact **雙側** control retains the existing bilateral option. |
+| Preview | A non-editing visual summary shows all approved selected surfaces and their side state before the user enters the demonstration. |
+| Demonstration and countdown | The current `Program Segment` is highlighted in a warm safety accent while the segment name, approved location and instruction remain adjacent to it. The map is informative only and never exposes a new editable body target. |
+
+The first release covers the already approved shoulder-and-neck, upper/middle/lower-back, upper-hip, and forearm-and-palm surfaces. It does not turn a visual map into medical positioning, does not display excluded areas as tappable, and preserves the current approved self-guided substitutes.
+
 ## Key user flows
 
 ### New guided flow

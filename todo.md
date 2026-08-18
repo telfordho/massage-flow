@@ -14,7 +14,7 @@
 - [x] Reapply the fixed-order main-segment duration-edit correction after workspace recovery.
 - [x] Restart and verify the development server after the sandbox reset.
 - [x] Make the demonstration and countdown screens vertically scrollable with safe-area spacing below bottom controls.
-- [ ] Validate AsyncStorage persistence, history, and preview-gated repeat flow on a physical device after restarting the app.
+- [x] Validate AsyncStorage persistence, history, and preview-gated repeat flow on a physical device after restarting the app.
 - [x] Make the session-history entry more prominent on the home and completion flows.
 - [x] Confirm the first additional broad body region for the next Massage Flow expansion: shoulder and neck.
 - [x] Define shoulder-and-neck general-relaxation safety boundaries and self-versus-assisted accessibility rules.
@@ -37,3 +37,7 @@
 - [x] Add upper-hip program generation, selection, preview, guidance, history, and repeat-flow support.
 - [x] Add regression tests for upper-hip safety and deterministic program rules.
 - [x] Update documentation and handoff materials for the upper-hip expansion.
+- [x] Define the portrait-first interactive body-map visual model and selection states for the current approved regions.
+- [x] Implement shared visual mapping so selection, preview, demonstration, and countdown identify the same region and side.
+- [x] Add automated regression coverage and validate the interactive visual-guidance flow on the supported mobile paths.
+- [x] Update MVP visual-guidance documentation and handoff materials after verification.
