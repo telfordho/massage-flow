@@ -59,3 +59,4 @@
 - [x] Reconnect the neutral shoulder-to-upper-arm meshes and align forearm highlights to eliminate misplaced elbow-area blocks.
 - [x] Fix self-guided entry so no stale target is highlighted before selection, and extend selected forearm highlights across the full elbow-to-wrist span.
 - [x] Make assisted new sessions start with an empty neutral selection while preserving saved targets exclusively for explicit history replay.
+- [x] Extend selected forearm highlights continuously from elbow to wrist on both sides of the 3D mannequin.
