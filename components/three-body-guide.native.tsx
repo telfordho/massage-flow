@@ -38,8 +38,8 @@ function SurfacePatch({
 
   if (region === "FOREARM_PALM") {
     return (
-      <mesh renderOrder={2} position={[side === "LEFT" ? -0.82 : 0.82, 0.02, -0.02]} rotation={[0, 0, side === "LEFT" ? -0.2 : 0.2]} scale={[1.05, 1.05, 1.05]} onClick={click}>
-        <capsuleGeometry args={[0.14, 0.56, 10, 18]} />
+      <mesh renderOrder={2} position={[side === "LEFT" ? -0.9 : 0.9, 0.18, -0.02]} rotation={[0, 0, side === "LEFT" ? -0.2 : 0.2]} scale={[1.05, 1.05, 1.05]} onClick={click}>
+        <capsuleGeometry args={[0.14, 0.49, 10, 18]} />
         <meshStandardMaterial color={color} depthWrite={false} transparent opacity={opacity} roughness={0.58} />
       </mesh>
     );
@@ -58,8 +58,8 @@ function SurfacePatch({
         <meshStandardMaterial color={color} side={THREE.DoubleSide} depthWrite={false} transparent opacity={opacity} roughness={0.58} />
       </mesh>
       {region === "SHOULDER_NECK" ? (
-        <mesh renderOrder={2} position={[side === "LEFT" ? -0.7 : 0.7, 1.2, -0.02]} rotation={[0, 0, side === "LEFT" ? -0.46 : 0.46]} onClick={click}>
-          <capsuleGeometry args={[0.16, 0.36, 10, 18]} />
+        <mesh renderOrder={2} position={[side === "LEFT" ? -0.65 : 0.65, 1.2, -0.02]} rotation={[0, 0, side === "LEFT" ? -0.8 : 0.8]} onClick={click}>
+          <capsuleGeometry args={[0.17, 0.3, 10, 18]} />
           <meshStandardMaterial color={color} depthWrite={false} transparent opacity={opacity} roughness={0.58} />
         </mesh>
       ) : null}
@@ -75,6 +75,8 @@ function Mannequin({
     <group rotation={[0, rotation, 0]} scale={[zoom, zoom, zoom]}>
       <mesh position={[0, 0.2, 0]} scale={[0.74, 1.35, 0.42]} material={material}><sphereGeometry args={[1, 32, 24]} /></mesh>
       <mesh position={[0, 1.78, 0]} scale={[0.38, 0.47, 0.36]} material={material}><sphereGeometry args={[1, 28, 20]} /></mesh>
+      <mesh position={[-0.65, 1.2, -0.02]} rotation={[0, 0, -0.8]} material={material}><capsuleGeometry args={[0.17, 0.3, 10, 18]} /></mesh>
+      <mesh position={[0.65, 1.2, -0.02]} rotation={[0, 0, 0.8]} material={material}><capsuleGeometry args={[0.17, 0.3, 10, 18]} /></mesh>
       <mesh position={[-0.9, 0.56, -0.02]} rotation={[0, 0, -0.2]} material={material}><capsuleGeometry args={[0.14, 1.25, 10, 18]} /></mesh>
       <mesh position={[0.9, 0.56, -0.02]} rotation={[0, 0, 0.2]} material={material}><capsuleGeometry args={[0.14, 1.25, 10, 18]} /></mesh>
       <mesh position={[-0.31, -1.45, 0]} material={material}><capsuleGeometry args={[0.23, 1.65, 12, 20]} /></mesh>

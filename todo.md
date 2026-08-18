@@ -56,3 +56,4 @@
 - [x] Fix the 3D initialization state so no region or forearm appears highlighted before the user selects it.
 - [x] Fix forearm overlay depth so neutral arms remain visible and selected forearms stay highlighted across mannequin rotations.
 - [x] Separate neutral upper-arm geometry from elbow-to-wrist forearm selection so the outer shoulder and upper arm remain visible when unselected.
+- [x] Reconnect the neutral shoulder-to-upper-arm meshes and align forearm highlights to eliminate misplaced elbow-area blocks.
