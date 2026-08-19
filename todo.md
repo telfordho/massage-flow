@@ -10,7 +10,7 @@
 - [x] Add or update deterministic tests for persistence and repeat-flow rules.
 - [x] Update current-state, handoff, specification, and source-archive materials after the feature is verified.
 - [x] Generate a custom Massage Flow launcher-branding concept for user review.
-- [ ] Wait for user approval before including the custom Massage Flow launcher branding in a checkpointed release.
+- [x] Wait for user approval before including the custom Massage Flow launcher branding in a checkpointed release.
 - [x] Reapply the fixed-order main-segment duration-edit correction after workspace recovery.
 - [x] Restart and verify the development server after the sandbox reset.
 - [x] Make the demonstration and countdown screens vertically scrollable with safe-area spacing below bottom controls.
@@ -76,3 +76,6 @@
 - [x] Align the detailed 2D forearm-and-palm highlight paths within the full-body arm outline.
 - [x] Replace remaining demonstration and countdown 3D body visuals with the approved detailed full-body 2D guidance map.
 - [x] Update product status, design, handoff, and specification materials for the unified 2D guidance approach.
+- [x] Design and generate a custom Massage Flow launcher icon for the approved relaxation-guidance visual system.
+- [x] Apply the approved custom icon to iOS, Android, splash screen, and web favicon branding assets.
+- [x] Verify the app configuration and icon asset formats, then save a checkpointed branding release.

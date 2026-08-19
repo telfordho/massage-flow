@@ -2,7 +2,7 @@
 
 | Field | Current value |
 |---|---|
-| Updated | 2026-08-18 |
+| Updated | 2026-08-19 |
 | Runnable code baseline | Isolated **massage-flow-restored** Expo / React Native project |
 | Source restored from | `Massage_Flow_Prototype_Source_v1.0.zip` |
 | Latest specification package | `Massage_Flow_Spec_Package_v1.15.zip` |
@@ -68,7 +68,7 @@ The map reads the same approved `region + side` data that program generation use
 
 ## Verification result
 
-`pnpm check`, `pnpm test`, and `pnpm lint` pass. The active test suite contains 31 passing tests: 18 deterministic program-rule tests, 6 persistence/history tests, 4 interactive body-map mapping tests, and 3 historical 3D view/side mapping tests. One existing Node module-type performance warning appears during linting but does not produce a lint error. The custom launcher icon is intentionally deferred pending user review; the current review build uses lightweight default image assets.
+`pnpm check`, `pnpm test`, and `pnpm lint` pass. The active test suite contains 31 passing tests: 18 deterministic program-rule tests, 6 persistence/history tests, 4 interactive body-map mapping tests, and 3 historical 3D view/side mapping tests. One existing Node module-type performance warning appears during linting but does not produce a lint error. A custom Massage Flow launcher icon is now applied consistently to `icon.png`, `splash-icon.png`, `favicon.png`, and `android-icon-foreground.png`; the Expo configuration retains the fixed app slug and points to the generated logo asset for project branding.
 
 ## Next recommended slice
 
